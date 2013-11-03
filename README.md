@@ -1,4 +1,6 @@
-Store-System-
+Store-System
 =============
 
-Test Repo
+Main Repo for Store System Project
+
+Marvin Jimenez & Zach Strulovitch

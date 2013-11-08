@@ -32,7 +32,7 @@ public class StoreSystem extends JFrame {
         
         //------------------------------------------------------------------
         //North Panel
-        JPanel northPanel = new JPanel(new BorderLayout(10,10));
+        JPanel northPanel = new JPanel(new FlowLayout());
         
         ArrayList<String> productName = new ArrayList<>();
         productName.add("dragon");
@@ -43,30 +43,35 @@ public class StoreSystem extends JFrame {
         ArrayList<Integer> quantity = new ArrayList<>();
         quantity.add(4);
         quantity.add(22);
-        
+
+        JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel namePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel spricePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel qtyPanel = new JPanel(new GridLayout(0, 1, 5, 5));
       
         //display the products
         for(int x=0; x<productName.size(); x++){
+            JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
             JPanel sell = new JPanel(new BorderLayout());
             JPanel qty = new JPanel(new BorderLayout());
             
+            check.add(new JCheckBox());
             name.add(new JLabel(productName.get(x)), BorderLayout.NORTH);
             sell.add(new JLabel("$" + sellPrice.get(x)), BorderLayout.NORTH);
             qty.add(new JLabel("Qty: " + quantity.get(x)), BorderLayout.NORTH);
             
+            checkPanel.add(check);
             namePanel.add(name);
             spricePanel.add(sell);
             qtyPanel.add(qty);
         }
         
         //add the panels to northPanel
-        northPanel.add(namePanel, BorderLayout.WEST);
-        northPanel.add(spricePanel, BorderLayout.CENTER);
-        northPanel.add(qtyPanel, BorderLayout.EAST);
+        northPanel.add(checkPanel);
+        northPanel.add(namePanel);
+        northPanel.add(spricePanel);
+        northPanel.add(qtyPanel);
         
         //------------------------------------------------------------------
         //South Panel
@@ -92,10 +97,10 @@ public class StoreSystem extends JFrame {
         cart.addChangeListener(listener);
         
         //combo listener
-        Product milk = new Product("Milk", 5.68);
-        Product apple = new Product("Apple", 2.22);
-        combo.addItem(milk);
-        combo.addItem(apple);
+      //  Product milk = new Product("Milk", 5.68);
+      //  Product apple = new Product("Apple", 2.22);
+      //  combo.addItem(milk);
+      //  combo.addItem(apple);
         
         //button listener
         addButton.addActionListener(new
@@ -117,8 +122,18 @@ public class StoreSystem extends JFrame {
         frame.setVisible(true);
     }
     
+
+    
     //Main function
     public static void main(String[] args) {
-        StoreSystem storeSys = new StoreSystem();
-    }
+        User customer=new Customer("Marvin","cardei");
+        
+        Seller seller1=new Seller("one","password");
+        seller1.seri();
+        Seller seller2=new Seller("two","password");
+        seller2.seri();
+        
+        //StoreSystem storeSys = new StoreSystem();
+        
+}
 }

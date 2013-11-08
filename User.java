@@ -4,15 +4,15 @@
  */
 package storesystem;
 
-/**
+/*
  *
  * @author Administrator
- *
+ */
 public class User {
     
     
     public String name;
     public String password;
-    final public int type;
+    //final public int type;
     
-}*/
+}

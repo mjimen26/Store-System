@@ -1,7 +1,7 @@
-
 package storesystem;
 
 /**
+ * Zack added that
  * A line item in an invoice
  */
 public interface LineItem {

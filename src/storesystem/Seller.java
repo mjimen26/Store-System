@@ -23,13 +23,14 @@ public class Seller extends User{
         super.name=user;
         super.password=pass;
    
-         try
+    try
       {
-         FileInputStream fileIn = new FileInputStream(user+".cardei");
+         FileInputStream fileIn = new FileInputStream(user+".seri");
          ObjectInputStream in = new ObjectInputStream(fileIn);
          inventory = (Inventory) in.readObject();
          in.close();
          fileIn.close();
+         System.out.println("successful de-serialization of seller "+super.name+"!  total products: "+inventory.inventory.size());
       }catch(IOException i)
           {
          i.printStackTrace();
@@ -39,7 +40,7 @@ public class Seller extends User{
          System.out.println("Employee class not found");
          c.printStackTrace();
          return;
-      }
+      }     
        
         
         
@@ -50,12 +51,12 @@ public class Seller extends User{
         try
       {
          FileOutputStream fileOut =
-         new FileOutputStream(super.name+".cardei");
+         new FileOutputStream(super.name+".seri");
          ObjectOutputStream out = new ObjectOutputStream(fileOut);
          out.writeObject(inventory);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in /tmp/employee.ser\n");
+         System.out.printf("Serialized data is saved in "+super.name+".seri\n");
       }catch(IOException i)
       {
           i.printStackTrace();
@@ -66,7 +67,7 @@ public class Seller extends User{
     
     public static void main(String [] args){
         
-        System.out.println("hello cardei");
+       
     }
     
 }

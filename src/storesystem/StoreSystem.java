@@ -129,11 +129,14 @@ public class StoreSystem extends JFrame {
         User customer=new Customer("Marvin","cardei");
         
         Seller seller1=new Seller("one","password");
-        seller1.seri();
+        
         Seller seller2=new Seller("two","password");
-        seller2.seri();
+        
+       //listing a product to seller manually - disable when not needed please
+       // seller1.inventory.addProduct(new Product("productID","productName",1.1, 1.1,5, "http://www.picture.jpg","description"));
         
         //StoreSystem storeSys = new StoreSystem();
-        
+        seller1.seri();
+        seller2.seri();
 }
 }

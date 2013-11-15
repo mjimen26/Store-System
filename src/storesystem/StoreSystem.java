@@ -15,51 +15,65 @@ import javax.swing.event.ChangeListener;
  * StoreSystem is in charge of hangling the main methods
  * in the entire application
  */
-public class StoreSystem extends JFrame {
+public class StoreSystem extends JPanel{
     
     //New Shopping Cart and the Interface
     final ShoppingCart cart = new ShoppingCart();
     final ShoppingCartFormatter formatter = new SimpleFormatter();
         
-    //The Swing components
-    final JTextArea textArea = new JTextArea(10,50);
-    final JComboBox combo = new JComboBox();    
-    JButton addButton = new JButton("Add");
+    //The Main Panel
+    private JPanel mainPanel = new JPanel();
     
-    DecimalFormat df = new DecimalFormat("#.##");
     //Constructor for StoreSystem
     public StoreSystem(){
+        JPanel centerPanel = createCenterPanel();
+        JPanel southPanel = createSouthPanel();
         
-        //------------------------------------------------------------------
+        mainPanel.setLayout(new BorderLayout(20, 20));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        mainPanel.add(centerPanel, BorderLayout.NORTH);
+        mainPanel.add(southPanel, BorderLayout.SOUTH);
+        
+    }
+    
+    private JPanel createCenterPanel(){
         //North Panel
-        JPanel northPanel = new JPanel(new FlowLayout());
+        JPanel centerPanel = new JPanel(new GridLayout(0,4));
+        DecimalFormat df = new DecimalFormat("#.##");
         
-        ArrayList<String> productName = new ArrayList<>();
-        productName.add("dragon");
-        productName.add("pokemon");
-        ArrayList<Double> sellPrice = new ArrayList<>();
-        sellPrice.add(55.5);
-        sellPrice.add(44.2);
-        ArrayList<Integer> quantity = new ArrayList<>();
-        quantity.add(4);
-        quantity.add(22);
-
+        String[] productName = 
+        {
+            "Minecraft Pickaxe", "Diablo 3 XBOX", "GTA V PS3", "Batman Mask", 
+            "Pikachu Plushie", "Halo Suit", "Mario Mustache"
+        };
+        
+        double[] sellPrice =
+        {
+            150.92, 50.99, 59.99, 80.42, 
+            253.67, 999.01, 5.50
+        };
+        
+        int[] quantity =
+        {
+            2,3,4,2,3,3,1
+        };
+        
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel namePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel spricePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel qtyPanel = new JPanel(new GridLayout(0, 1, 5, 5));
       
         //display the products
-        for(int x=0; x<productName.size(); x++){
+        for(int x=0; x<productName.length; x++){
             JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
             JPanel sell = new JPanel(new BorderLayout());
             JPanel qty = new JPanel(new BorderLayout());
             
             check.add(new JCheckBox());
-            name.add(new JLabel(productName.get(x)), BorderLayout.NORTH);
-            sell.add(new JLabel("$" + sellPrice.get(x)), BorderLayout.NORTH);
-            qty.add(new JLabel("Qty: " + quantity.get(x)), BorderLayout.NORTH);
+            name.add(new JLabel(productName[x]), BorderLayout.NORTH);
+            sell.add(new JLabel("$" + sellPrice[x]), BorderLayout.NORTH);
+            qty.add(new JLabel("Qty: " + quantity[x]), BorderLayout.NORTH);
             
             checkPanel.add(check);
             namePanel.add(name);
@@ -68,15 +82,22 @@ public class StoreSystem extends JFrame {
         }
         
         //add the panels to northPanel
-        northPanel.add(checkPanel);
-        northPanel.add(namePanel);
-        northPanel.add(spricePanel);
-        northPanel.add(qtyPanel);
+        centerPanel.add(checkPanel);
+        centerPanel.add(namePanel);
+        centerPanel.add(spricePanel);
+        centerPanel.add(qtyPanel);
         
-        //------------------------------------------------------------------
+        return centerPanel;
+    }
+    
+    private JPanel createSouthPanel(){
         //South Panel
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
+        final JTextArea textArea = new JTextArea(10,50);
+        final JComboBox combo = new JComboBox();    
+        JButton addButton = new JButton("Add");
+    
             //the bottom components
             JPanel ctrlPanel = new JPanel();
             ctrlPanel.add(combo);
@@ -86,8 +107,51 @@ public class StoreSystem extends JFrame {
             southPanel.add(new JScrollPane(textArea), BorderLayout.NORTH);
             southPanel.add(ctrlPanel, BorderLayout.SOUTH);
             
-        //------------------------------------------------------------------    
-        //change listeners
+            return southPanel;
+    }
+    
+    public JPanel getMainPanel()
+    {
+        return mainPanel;
+    }
+ 
+    private static void createAndShowUI()
+    {
+        JFrame frame = new JFrame("Layout Example");
+        frame.getContentPane().add(new StoreSystem().getMainPanel());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    
+    //Main function
+    public static void main(String[] args) {
+        User customer=new Customer("Marvin","cardei");
+        Seller seller1=new Seller("one","password");
+        Seller seller2=new Seller("two","password");
+        
+       //listing a product to seller manually - disable when not needed please
+       // seller1.inventory.addProduct(new Product("productID","productName",1.1, 1.1,5, "http://www.picture.jpg","description"));
+        
+        StoreSystem storeSys = new StoreSystem();
+        seller1.seri();
+        seller2.seri();
+        
+        //Call to Create StoreSystem UI
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                createAndShowUI();
+            }
+        });
+    }
+}
+
+
+        /*
+         * //change listeners
         ChangeListener listener = new 
                 ChangeListener(){
                     public void stateChanged(ChangeEvent event){
@@ -95,12 +159,6 @@ public class StoreSystem extends JFrame {
                     }
                 };
         cart.addChangeListener(listener);
-        
-        //combo listener
-      //  Product milk = new Product("Milk", 5.68);
-      //  Product apple = new Product("Apple", 2.22);
-      //  combo.addItem(milk);
-      //  combo.addItem(apple);
         
         //button listener
         addButton.addActionListener(new
@@ -110,33 +168,4 @@ public class StoreSystem extends JFrame {
                        cart.addItem(item);
                    } 
                 });
-        
-        //Create Frame
-        JFrame frame = new JFrame();
-        //frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
-        frame.add(northPanel,BorderLayout.NORTH);
-        frame.add(southPanel, BorderLayout.SOUTH);
-        frame.setSize(600,400);
-        frame.setLocation(350,200); 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-    
-
-    
-    //Main function
-    public static void main(String[] args) {
-        User customer=new Customer("Marvin","cardei");
-        
-        Seller seller1=new Seller("one","password");
-        
-        Seller seller2=new Seller("two","password");
-        
-       //listing a product to seller manually - disable when not needed please
-       // seller1.inventory.addProduct(new Product("productID","productName",1.1, 1.1,5, "http://www.picture.jpg","description"));
-        
-        //StoreSystem storeSys = new StoreSystem();
-        seller1.seri();
-        seller2.seri();
-}
-}
+         */

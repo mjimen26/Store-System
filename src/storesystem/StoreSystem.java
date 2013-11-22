@@ -52,6 +52,7 @@ public class StoreSystem extends JPanel{
         ArrayList pName = new ArrayList();
         ArrayList pPrice = new ArrayList();
         ArrayList pQuantity = new ArrayList();
+        final ArrayList <Product> pProduct = new ArrayList<Product>();
         
        
   
@@ -60,29 +61,57 @@ public class StoreSystem extends JPanel{
  System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
-                    pName.add(p.getProductName());
-                    pPrice.add(p.getSellPrice());
-                    pQuantity.add(p.getQuantity());
+                    pProduct.add(p);
+                   // pName.add(p.getProductName());
+                   // pPrice.add(p.getSellPrice());
+                   // pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
             for (Product p:seller2.inventory.inventory){
                 if (p.getQuantity()>0){
-                    pName.add(p.getProductName());
-                    pPrice.add(p.getSellPrice());
-                    pQuantity.add(p.getQuantity());
+                    pProduct.add(p);
+                    //pName.add(p.getProductName());
+                    //pPrice.add(p.getSellPrice());
+                    //pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
         }
-        String[] productName=new String [pName.size()];
-        double[] sellPrice=new double [pName.size()];
-        int[] quantity=new int [pName.size()];
-        for (int i=0;i<pName.size();i++){
-            productName[i]=(String) pName.get(i);
-            sellPrice[i]=(double) pPrice.get(i);
-            quantity[i]=(int) pQuantity.get(i);
+        else if (current.name.equals("one")){
+            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
+ System.out.println("this is logged in: "+current.name);
+            for (Product p:seller1.inventory.inventory){
+                if (p.getQuantity()>0){
+                    pProduct.add(p);
+                    //pName.add(p.getProductName());
+                    //pPrice.add(p.getSellPrice());
+                    //pQuantity.add(p.getQuantity());
+                    System.out.println(p.getProductName());
+                }
+            }
         }
+        else if (current.name.equals("two")){
+            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
+ System.out.println("this is logged in: "+current.name);
+            for (Product p:seller2.inventory.inventory){
+                if (p.getQuantity()>0){
+                    pProduct.add(p);
+                    //pName.add(p.getProductName());
+                    //pPrice.add(p.getSellPrice());
+                    //pQuantity.add(p.getQuantity());
+                    System.out.println(p.getProductName());
+                }
+            }
+        }
+//        String[] productName=new String [pProduct.size()];
+//        double[] sellPrice=new double [pProduct.size()];
+//        int[] quantity=new int [pProduct.size()];
+//        for (int i=0;i<pProduct.size();i++){
+//            productName[i]=(pProduct.get(i).getProductName());
+//            sellPrice[i]=pProduct.get(i).getSellPrice();
+//            quantity[i]=pProduct.get(i).getQuantity();
+//        }
 
         
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -91,16 +120,31 @@ public class StoreSystem extends JPanel{
         JPanel qtyPanel = new JPanel(new GridLayout(0, 1, 5, 5));
       
         //display the products
-        for(int x=0; x<productName.length; x++){
+        //for(int x=0; x<pProduct.size(); x++){
+        //final Product p;
+          for (Product pp:pProduct){  
             JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
+             final Product p=pp;
+              name.addMouseListener(new MouseAdapter()  {
+                public void mouseClicked(MouseEvent e) {
+                    // you can open a new frame here as
+                    // i have assumed you have declared "frame" as instance variable
+                    Frame frame = new JFrame(p.getPicture());
+                    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setAlwaysOnTop(true);
+                    frame.setSize(300, 500);
+                    frame.setLocation(500, 500);
+                    frame.setVisible(true);
+                    }
+                }); 
             JPanel sell = new JPanel(new BorderLayout());
             JPanel qty = new JPanel(new BorderLayout());
             
             check.add(new JCheckBox());
-            name.add(new JLabel(productName[x]), BorderLayout.NORTH);
-            sell.add(new JLabel("$" + sellPrice[x]), BorderLayout.NORTH);
-            qty.add(new JLabel("Qty: " + quantity[x]), BorderLayout.NORTH);
+            name.add(new JLabel(pp.getProductName()), BorderLayout.NORTH);
+            sell.add(new JLabel("$" + pp.getSellPrice()), BorderLayout.NORTH);
+            qty.add(new JLabel("Qty: " + pp.getQuantity()), BorderLayout.NORTH);
             
             checkPanel.add(check);
             namePanel.add(name);

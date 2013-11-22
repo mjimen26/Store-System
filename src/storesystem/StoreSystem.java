@@ -125,16 +125,19 @@ public class StoreSystem extends JPanel{
           for (Product pp:pProduct){  
             JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
-             final Product p=pp;
+             //final Product p=pp;
+            
               name.addMouseListener(new MouseAdapter()  {
+                  
+                  @Override
                 public void mouseClicked(MouseEvent e) {
                     // you can open a new frame here as
                     // i have assumed you have declared "frame" as instance variable
-                    Frame frame = new JFrame(p.getPicture());
+                    Frame frame = new JFrame("TITLE HERE ");//pp.getPicture());
                     //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     frame.setAlwaysOnTop(true);
                     frame.setSize(300, 500);
-                    frame.setLocation(500, 500);
+                    frame.setLocation(350, 400);
                     frame.setVisible(true);
                     }
                 }); 
@@ -168,6 +171,14 @@ public class StoreSystem extends JPanel{
         final JTextArea textArea = new JTextArea(10,50);
         final JComboBox combo = new JComboBox();    
         JButton addButton = new JButton("Add");
+        //ADD BUTTON LISTENER
+        addButton.addMouseListener(new MouseAdapter()  {
+                  
+                  @Override
+                public void mouseClicked(MouseEvent e) {
+                    System.out.println("ADD BUTTON PRESSED");
+                    }
+                }); 
     
             //the bottom components
             JPanel ctrlPanel = new JPanel();

@@ -7,15 +7,24 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Login extends JFrame {
-
-    public static void main(String[] args) {
-        Login login = new Login();
-    }
-
-    JButton blogin = new JButton("Login");
-    JPanel panel = new JPanel();
     JTextField txuser = new JTextField(15);
     JPasswordField pass = new JPasswordField(15);
+    
+    public static void main(String args) {
+        Login login = new Login();
+    }
+    public String[] log(String message){
+        String[] userpass=new String[2];
+        //Login login = new Login();
+        userpass[0]=txuser.getText();
+        System.out.println("i'm here");
+        userpass[1]=pass.getText();
+        return userpass;
+    }
+    JButton blogin = new JButton("Login");
+    JPanel panel = new JPanel();
+    //JTextField txuser = new JTextField(15);
+    //JPasswordField pass = new JPasswordField(15);
 
     Login(){
         super("Login Authentication");
@@ -37,14 +46,32 @@ public class Login extends JFrame {
         actionlogin();
     }
 
+     public static void main(String[] args) {
+        Login logscreen=new Login();}
+    
+    
     public void actionlogin(){
         blogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
             String puname = txuser.getText();
             String ppaswd = pass.getText();
-            if(puname.equals("test") && ppaswd.equals("123")) {
+            
+            if(puname.equals("Marvin") && ppaswd.equals("icecream")) {
                 StoreSystem regFace = new StoreSystem();
-                regFace.setVisible(false);
+                regFace.setVisible(true);
+                regFace.make("Marvin");
+                dispose();
+            } 
+            else if (puname.equals("one") && ppaswd.equals("password")) {
+                StoreSystem regFace= new StoreSystem();
+                regFace.setVisible(true);
+                regFace.make("one");
+                dispose();
+            } 
+            else if (puname.equals("two") && ppaswd.equals("password")) {
+                StoreSystem regFace = new StoreSystem();
+                regFace.setVisible(true);
+                regFace.make("two");
                 dispose();
             } 
             else {

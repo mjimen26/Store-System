@@ -117,26 +117,33 @@ public class StoreSystem extends JPanel{
  
     private static void createAndShowUI()
     {
-        JFrame frame = new JFrame("Layout Example");
+        JFrame frame = new JFrame("Welcome back "+which );
         frame.getContentPane().add(new StoreSystem().getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    public User customer=new Customer("Marvin","icecream");
+    public Seller seller1=new Seller("one","password");
+    public Seller seller2=new Seller("two","password");
+    static public String which;
+    User current;
     
-    //Main function
-    public static void main(String[] args) {
-        User customer=new Customer("Marvin","cardei");
-        Seller seller1=new Seller("one","password");
-        Seller seller2=new Seller("two","password");
+    public  void make(String who) {
+        which=who;
+        
+        if (which==customer.name) current=customer;
+        if (which==seller1.name) current=seller1;
+        if (which==seller2.name) current=seller2;
         
        //listing a product to seller manually - disable when not needed please
        // seller1.inventory.addProduct(new Product("productID","productName",1.1, 1.1,5, "http://www.picture.jpg","description"));
         
         StoreSystem storeSys = new StoreSystem();
-        seller1.seri();
-        seller2.seri();
+       // do serialization only when : add\edit product AND when sold product
+        // seller1.seri();
+       // seller2.seri();
         
         //Call to Create StoreSystem UI
         java.awt.EventQueue.invokeLater(new Runnable()

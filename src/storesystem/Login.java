@@ -57,21 +57,21 @@ public class Login extends JFrame {
             String ppaswd = pass.getText();
             
             if(puname.equals("Marvin") && ppaswd.equals("icecream")) {
-                StoreSystem regFace = new StoreSystem();
+                StoreSystem regFace = new StoreSystem("Marvin");
                 regFace.setVisible(true);
-                regFace.make("Marvin");
+                regFace.main();               
                 dispose();
             } 
             else if (puname.equals("one") && ppaswd.equals("password")) {
-                StoreSystem regFace= new StoreSystem();
+                StoreSystem regFace= new StoreSystem("one");
                 regFace.setVisible(true);
-                regFace.make("one");
+                regFace.main();
                 dispose();
             } 
             else if (puname.equals("two") && ppaswd.equals("password")) {
-                StoreSystem regFace = new StoreSystem();
+                StoreSystem regFace = new StoreSystem("two");
                 regFace.setVisible(true);
-                regFace.make("two");
+                regFace.main();
                 dispose();
             } 
             else {

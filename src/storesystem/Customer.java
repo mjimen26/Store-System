@@ -9,9 +9,10 @@ package storesystem;
  * @author Administrator
  */
 public class Customer extends User {
-    final public int type=1;
+    
     public Customer(String user,String pass){
         super.name=user;
+        super.type=1;
         super.password=pass;
     }
     

@@ -36,6 +36,22 @@ public class Product implements Serializable{
     public double getSellPrice(){
         return sellPrice;
     }
+     public int getQuantity(){
+        return quantity;
+    }
+      public String getProductID(){
+        return productID;
+    } public String getProductName(){
+        return productName;
+    } public double getInvoicePrice(){
+        return invoicePrice;}
+     public String getDescription(){
+        return description;
+    } public String getPicture(){
+        return picture;
+    } public int getSold(){
+        return sold;
+    }
     
     private String productID;
     private String productName;

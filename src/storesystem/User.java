@@ -13,6 +13,6 @@ public class User {
     
     public String name;
     public String password;
-    //final public int type;
+    public int type;
     
 }

@@ -17,11 +17,12 @@ import java.io.ObjectOutputStream;
 public class Seller extends User{
     
     Inventory inventory=new Inventory();
-    final public int type=2;
+    
     
     public Seller(String user,String pass){
         super.name=user;
         super.password=pass;
+        super.type=2;
    
     try
       {
@@ -31,6 +32,9 @@ public class Seller extends User{
          in.close();
          fileIn.close();
          System.out.println("successful de-serialization of seller "+super.name+"!  total products: "+inventory.inventory.size());
+         for (Product pro: inventory.inventory)
+            System.out.println(pro.toString());
+         
       }catch(IOException i)
           {
          i.printStackTrace();

@@ -24,8 +24,16 @@ public class StoreSystem extends JPanel{
     //The Main Panel
     private JPanel mainPanel = new JPanel();
     
+    public StoreSystem(){}
+    
     //Constructor for StoreSystem
-    public StoreSystem(){
+    public StoreSystem(String who){
+      
+          which=who;
+        if (customer.name.equals(which)) current=customer;
+        if (seller1.name.equals(which)) current=seller1;
+        if (seller2.name.equals(which)) current=seller2;
+      
         JPanel centerPanel = createCenterPanel();
         JPanel southPanel = createSouthPanel();
         
@@ -40,23 +48,42 @@ public class StoreSystem extends JPanel{
         //North Panel
         JPanel centerPanel = new JPanel(new GridLayout(0,4));
         DecimalFormat df = new DecimalFormat("#.##");
+                    
+        ArrayList pName = new ArrayList();
+        ArrayList pPrice = new ArrayList();
+        ArrayList pQuantity = new ArrayList();
         
-        String[] productName = 
-        {
-            "Minecraft Pickaxe", "Diablo 3 XBOX", "GTA V PS3", "Batman Mask", 
-            "Pikachu Plushie", "Halo Suit", "Mario Mustache"
-        };
-        
-        double[] sellPrice =
-        {
-            150.92, 50.99, 59.99, 80.42, 
-            253.67, 999.01, 5.50
-        };
-        
-        int[] quantity =
-        {
-            2,3,4,2,3,3,1
-        };
+       
+  
+        if (current.type==1){
+            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
+ System.out.println("this is logged in: "+current.name);
+            for (Product p:seller1.inventory.inventory){
+                if (p.getQuantity()>0){
+                    pName.add(p.getProductName());
+                    pPrice.add(p.getSellPrice());
+                    pQuantity.add(p.getQuantity());
+                    System.out.println(p.getProductName());
+                }
+            }
+            for (Product p:seller2.inventory.inventory){
+                if (p.getQuantity()>0){
+                    pName.add(p.getProductName());
+                    pPrice.add(p.getSellPrice());
+                    pQuantity.add(p.getQuantity());
+                    System.out.println(p.getProductName());
+                }
+            }
+        }
+        String[] productName=new String [pName.size()];
+        double[] sellPrice=new double [pName.size()];
+        int[] quantity=new int [pName.size()];
+        for (int i=0;i<pName.size();i++){
+            productName[i]=(String) pName.get(i);
+            sellPrice[i]=(double) pPrice.get(i);
+            quantity[i]=(int) pQuantity.get(i);
+        }
+
         
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel namePanel = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -118,7 +145,7 @@ public class StoreSystem extends JPanel{
     private static void createAndShowUI()
     {
         JFrame frame = new JFrame("Welcome back "+which );
-        frame.getContentPane().add(new StoreSystem().getMainPanel());
+        frame.getContentPane().add(new StoreSystem(which).getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -130,20 +157,22 @@ public class StoreSystem extends JPanel{
     static public String which;
     User current;
     
-    public  void make(String who) {
-        which=who;
+    public  void main() {
         
-        if (which==customer.name) current=customer;
-        if (which==seller1.name) current=seller1;
-        if (which==seller2.name) current=seller2;
+ 
+        
         
        //listing a product to seller manually - disable when not needed please
-       // seller1.inventory.addProduct(new Product("productID","productName",1.1, 1.1,5, "http://www.picture.jpg","description"));
+       // seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
+       // seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
+       // seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
         
-        StoreSystem storeSys = new StoreSystem();
-       // do serialization only when : add\edit product AND when sold product
+               // do serialization only when : add\edit product AND when sold product
         // seller1.seri();
        // seller2.seri();
+        
+        StoreSystem storeSys = new StoreSystem(which);
+
         
         //Call to Create StoreSystem UI
         java.awt.EventQueue.invokeLater(new Runnable()

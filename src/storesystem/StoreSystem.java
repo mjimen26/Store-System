@@ -18,6 +18,7 @@ import javax.swing.event.ChangeListener;
 public class StoreSystem extends JPanel{
     
     final ArrayList <Product> pProduct = new ArrayList<Product>();
+    final ArrayList <JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
     //New Shopping Cart and the Interface
     final ShoppingCart cart = new ShoppingCart();
     final ShoppingCartFormatter formatter = new SimpleFormatter();
@@ -63,6 +64,7 @@ public class StoreSystem extends JPanel{
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
+                    checkBoxes.add(new JCheckBox());
                    // pName.add(p.getProductName());
                    // pPrice.add(p.getSellPrice());
                    // pQuantity.add(p.getQuantity());
@@ -72,6 +74,7 @@ public class StoreSystem extends JPanel{
             for (Product p:seller2.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
+                    checkBoxes.add(new JCheckBox());
                     //pName.add(p.getProductName());
                     //pPrice.add(p.getSellPrice());
                     //pQuantity.add(p.getQuantity());
@@ -85,6 +88,7 @@ public class StoreSystem extends JPanel{
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
+                    checkBoxes.add(new JCheckBox());
                     //pName.add(p.getProductName());
                     //pPrice.add(p.getSellPrice());
                     //pQuantity.add(p.getQuantity());
@@ -98,6 +102,7 @@ public class StoreSystem extends JPanel{
             for (Product p:seller2.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
+                    checkBoxes.add(new JCheckBox());
                     //pName.add(p.getProductName());
                     //pPrice.add(p.getSellPrice());
                     //pQuantity.add(p.getQuantity());
@@ -115,7 +120,9 @@ public class StoreSystem extends JPanel{
         //display the products
         //for(int x=0; x<pProduct.size(); x++){
         //final Product p;
+        int i=-1;
           for (Product pp:pProduct){  
+              i++;
             JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
              //final Product p=pp;
@@ -137,7 +144,7 @@ public class StoreSystem extends JPanel{
             JPanel sell = new JPanel(new BorderLayout());
             JPanel qty = new JPanel(new BorderLayout());
             
-            check.add(new JCheckBox());
+            check.add(checkBoxes.get(i));
             name.add(new JLabel(pp.getProductName()), BorderLayout.NORTH);
             sell.add(new JLabel("$" + pp.getSellPrice()), BorderLayout.NORTH);
             qty.add(new JLabel("Qty: " + pp.getQuantity()), BorderLayout.NORTH);
@@ -170,8 +177,11 @@ public class StoreSystem extends JPanel{
                   @Override
                 public void mouseClicked(MouseEvent e) {
                       String toSet="";
+                      int i=-1;
                       for (Product pp:pProduct){
-                          toSet+=pp.getProductName()+" "+pp.getInvoicePrice()+" "+pp.getDescription()+"\n";
+                          i++;
+                          if (checkBoxes.get(i).isSelected())
+                              toSet+=pp.getProductName()+" "+pp.getInvoicePrice()+" "+pp.getDescription()+"\n";
                       }
                       textArea.setText(toSet);
                       southPanel.repaint();

@@ -17,6 +17,7 @@ import javax.swing.event.ChangeListener;
  */
 public class StoreSystem extends JPanel{
     
+    final ArrayList <Product> pProduct = new ArrayList<Product>();
     //New Shopping Cart and the Interface
     final ShoppingCart cart = new ShoppingCart();
     final ShoppingCartFormatter formatter = new SimpleFormatter();
@@ -52,7 +53,7 @@ public class StoreSystem extends JPanel{
         ArrayList pName = new ArrayList();
         ArrayList pPrice = new ArrayList();
         ArrayList pQuantity = new ArrayList();
-        final ArrayList <Product> pProduct = new ArrayList<Product>();
+        //final ArrayList <Product> pProduct = new ArrayList<Product>();
         
        
   
@@ -104,14 +105,6 @@ public class StoreSystem extends JPanel{
                 }
             }
         }
-//        String[] productName=new String [pProduct.size()];
-//        double[] sellPrice=new double [pProduct.size()];
-//        int[] quantity=new int [pProduct.size()];
-//        for (int i=0;i<pProduct.size();i++){
-//            productName[i]=(pProduct.get(i).getProductName());
-//            sellPrice[i]=pProduct.get(i).getSellPrice();
-//            quantity[i]=pProduct.get(i).getQuantity();
-//        }
 
         
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -166,7 +159,7 @@ public class StoreSystem extends JPanel{
     
     private JPanel createSouthPanel(){
         //South Panel
-        JPanel southPanel = new JPanel();
+        final JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea(10,50);
         final JComboBox combo = new JComboBox();    
@@ -176,7 +169,14 @@ public class StoreSystem extends JPanel{
                   
                   @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println("ADD BUTTON PRESSED");
+                      String toSet="";
+                      for (Product pp:pProduct){
+                          toSet+=pp.getProductName()+" "+pp.getInvoicePrice()+" "+pp.getDescription()+"\n";
+                      }
+                      textArea.setText(toSet);
+                      southPanel.repaint();
+                          
+                          
                     }
                 }); 
     

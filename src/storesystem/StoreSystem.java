@@ -3,11 +3,15 @@ package storesystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -123,6 +127,8 @@ public class StoreSystem extends JPanel{
         int i=-1;
           for (Product pp:pProduct){  
               i++;
+              final Product curent=pp;
+              //SAVE WHICH KIND OF USER AS FINAL
             JPanel check = new JPanel(new BorderLayout());
             JPanel name = new JPanel(new BorderLayout());
              //final Product p=pp;
@@ -131,10 +137,40 @@ public class StoreSystem extends JPanel{
                   
                   @Override
                 public void mouseClicked(MouseEvent e) {
+                      final Product current=curent;
                     // you can open a new frame here as
                     // i have assumed you have declared "frame" as instance variable
-                    Frame frame = new JFrame("TITLE HERE ");//pp.getPicture());
+                    Frame frame = new JFrame(current.getProductName());//pp.getPicture());
                     //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    
+                    Image image = null;
+                    try {
+                        URL url = new URL(current.getPicture());
+                        image = ImageIO.read(url);
+                    } 
+                    catch (IOException ee) {
+                            ee.printStackTrace();
+                    }
+                    JLabel label = new JLabel(new ImageIcon(image));
+                    
+                    frame.add(label);
+                    System.out.println("Added Picture!!!!");
+                     TextField textField1=new TextField(current.getDescription());
+                     textField1.setFont(new Font("Serif",Font.BOLD,40));
+                     TextField textField2=new TextField(current.getProductName());
+                     TextField textField3=new TextField(Double.toString(current.getInvoicePrice()));     
+                     textField1.setEditable(false);
+                     textField2.setEditable(false);
+                     textField3.setEditable(false);
+                     JPanel listPane = new JPanel();
+                     listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
+                     listPane.add(label);
+                     listPane.add(textField1);
+                     listPane.add(textField2);
+                     listPane.add(textField3); 
+                     frame.add(listPane);
+
+                    
                     frame.setAlwaysOnTop(true);
                     frame.setSize(300, 500);
                     frame.setLocation(350, 400);
@@ -170,7 +206,7 @@ public class StoreSystem extends JPanel{
         southPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea(10,50);
         final JComboBox combo = new JComboBox();    
-        JButton addButton = new JButton("Add");
+        JButton addButton = new JButton("Update Cart");
         //ADD BUTTON LISTENER
         addButton.addMouseListener(new MouseAdapter()  {
                   

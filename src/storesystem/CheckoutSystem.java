@@ -85,7 +85,7 @@ public class CheckoutSystem extends JPanel{
         dialog.setVisible(true);  
     }
     
-    public static void main(String[] args){
+    public void main(){
         
         frame.getContentPane().add(new CheckoutSystem().getCheckoutPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

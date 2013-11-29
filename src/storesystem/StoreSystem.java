@@ -28,8 +28,7 @@ public class StoreSystem extends JPanel{
     final ShoppingCartFormatter formatter = new SimpleFormatter();
         
     //The Main Panel
-    private JPanel mainPanel = new JPanel();
-    
+    private JPanel mainPanel = new JPanel();    
     public StoreSystem(){}
     
     //Constructor for StoreSystem
@@ -50,6 +49,9 @@ public class StoreSystem extends JPanel{
         
     }
     
+    /*
+     * The Center Panel displays the inventory
+     */
     private JPanel createCenterPanel(){
         //North Panel
         JPanel centerPanel = new JPanel(new GridLayout(0,4));
@@ -60,11 +62,12 @@ public class StoreSystem extends JPanel{
         ArrayList pQuantity = new ArrayList();
         //final ArrayList <Product> pProduct = new ArrayList<Product>();
         
-       
-  
+        //Distinguishes the type of user that is logged in.
+        //If customer, show all products
+        //Else if seller, show private inventory only
         if (current.type==1){
             //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
- System.out.println("this is logged in: "+current.name);
+            System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
@@ -88,7 +91,7 @@ public class StoreSystem extends JPanel{
         }
         else if (current.name.equals("one")){
             //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
- System.out.println("this is logged in: "+current.name);
+            System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
@@ -102,7 +105,7 @@ public class StoreSystem extends JPanel{
         }
         else if (current.name.equals("two")){
             //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
- System.out.println("this is logged in: "+current.name);
+            System.out.println("this is logged in: "+current.name);
             for (Product p:seller2.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
@@ -115,7 +118,7 @@ public class StoreSystem extends JPanel{
             }
         }
 
-        
+        //JComponents necessary to arrange the Inventory neatly.
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel namePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel spricePanel = new JPanel(new GridLayout(0, 1, 5, 5));
@@ -191,53 +194,70 @@ public class StoreSystem extends JPanel{
             qtyPanel.add(qty);
         }
         
-        //add the panels to northPanel
+        //add the panels to centerPanel
         centerPanel.add(checkPanel);
         centerPanel.add(namePanel);
         centerPanel.add(spricePanel);
         centerPanel.add(qtyPanel);
         
         return centerPanel;
-    }
+    }//end of createCenterPanel
     
+    /*
+     * The South Panel displays the Shopping Cart and is updated 
+     * every time the Update Cart button is clicked.
+     */
     private JPanel createSouthPanel(){
         //South Panel
         final JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea(10,50);
-        final JComboBox combo = new JComboBox();    
         JButton addButton = new JButton("Update Cart");
-        //ADD BUTTON LISTENER
-        addButton.addMouseListener(new MouseAdapter()  {
-                  
-                  @Override
-                public void mouseClicked(MouseEvent e) {
-                      String toSet="";
-                      int i=-1;
-                      for (Product pp:pProduct){
-                          i++;
-                          if (checkBoxes.get(i).isSelected())
-                              toSet+=pp.getProductName()+" "+pp.getInvoicePrice()+" "+pp.getDescription()+"\n";
-                      }
-                      textArea.setText(toSet);
-                      southPanel.repaint();
-                          
-                          
-                    }
-                }); 
-    
-            //the bottom components
-            JPanel ctrlPanel = new JPanel();
-            ctrlPanel.add(combo);
-            ctrlPanel.add(addButton);
+        JButton checkoutButton = new JButton("Checkout");
         
-            //the entire South Panel
-            southPanel.add(new JScrollPane(textArea), BorderLayout.NORTH);
-            southPanel.add(ctrlPanel, BorderLayout.SOUTH);
-            
-            return southPanel;
-    }
+        //Update Listener
+        addButton.addMouseListener(new MouseAdapter()  {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String toSet="";
+                    int i=-1;
+                    for (Product pp:pProduct){
+                        i++;
+                        if (checkBoxes.get(i).isSelected())
+                            toSet+=pp.getProductName()+" "
+                                    +pp.getInvoicePrice()+" "
+                                    +pp.getDescription()+"\n";
+                        }
+                    textArea.setText(toSet);
+                    southPanel.repaint();
+            }
+        }); 
+        
+        //Checkout Listener
+        checkoutButton.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                CheckoutSystem check = new CheckoutSystem();
+                check.setVisible(true);
+                check.main();
+                //dispose();
+            }
+        });
     
+        //JComponents for Shopping Cart
+        JPanel ctrlPanel = new JPanel(new GridLayout(0,2));
+        ctrlPanel.add(addButton);
+        ctrlPanel.add(checkoutButton);
+        
+        //the entire South Panel
+        southPanel.add(new JScrollPane(textArea), BorderLayout.NORTH);
+        southPanel.add(ctrlPanel, BorderLayout.SOUTH);
+            
+        return southPanel;
+    }//end of createSouthPanel
+    
+    /*
+     * Returns the Main Panel containing the Inventory and Shopping Cart Panels
+     */
     public JPanel getMainPanel()
     {
         return mainPanel;
@@ -259,22 +279,17 @@ public class StoreSystem extends JPanel{
     User current;
     
     public  void main() {
+        //listing a product to seller manually - disable when not needed please
+        // seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
+        // seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
+        // seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
         
- 
-        
-        
-       //listing a product to seller manually - disable when not needed please
-       // seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
-       // seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
-       // seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
-        
-               // do serialization only when : add\edit product AND when sold product
+        // do serialization only when : add\edit product AND when sold product
         // seller1.seri();
-       // seller2.seri();
+        // seller2.seri();
         
         StoreSystem storeSys = new StoreSystem(which);
 
-        
         //Call to Create StoreSystem UI
         java.awt.EventQueue.invokeLater(new Runnable()
         {
@@ -283,9 +298,9 @@ public class StoreSystem extends JPanel{
                 createAndShowUI();
             }
         });
-    }
-}
-
+    }//end of main
+    
+}//end of StoreSystem class
 
         /*
          * //change listeners

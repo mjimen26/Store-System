@@ -26,6 +26,7 @@ public class StoreSystem extends JPanel{
     //New Shopping Cart and the Interface
     final ShoppingCart cart = new ShoppingCart();
     final ShoppingCartFormatter formatter = new SimpleFormatter();
+    static JFrame frame = new JFrame("Welcome back " ); 
         
     //The Main Panel
     private JPanel mainPanel = new JPanel();    
@@ -142,9 +143,10 @@ public class StoreSystem extends JPanel{
                   
                   @Override
                 public void mouseClicked(MouseEvent e) {
-                      final Product currentProduct=curent;
-                      currentProduct.showProduct(currentUser.type);
-                  System.out.println("This is a user type DSFSDFSDFSDFSDFSDF\n\n\nDFSDFSDFSDFSDFSDFSDF "+currentUser.type);
+                      //final Product currentProduct=curent;
+                      curent.showProduct(currentUser);
+                      //currentProduct.showProduct(currentUser);
+                      frame.dispose();
                     }
                 }); 
             JPanel sell = new JPanel(new BorderLayout());
@@ -166,6 +168,7 @@ public class StoreSystem extends JPanel{
         centerPanel.add(namePanel);
         centerPanel.add(spricePanel);
         centerPanel.add(qtyPanel);
+        
         
         return centerPanel;
     }//end of createCenterPanel
@@ -232,12 +235,14 @@ public class StoreSystem extends JPanel{
  
     private static void createAndShowUI()
     {
-        JFrame frame = new JFrame("Welcome back "+which );
+        //final JFrame frame = new JFrame("Welcome back "+which );
+        frame.setName("Welcome back "+which );
         frame.getContentPane().add(new StoreSystem(which).getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
     }
     public User customer=new Customer("Marvin","icecream");
     public Seller seller1=new Seller("one","password");
@@ -246,14 +251,22 @@ public class StoreSystem extends JPanel{
     User current;
     
     public  void main() {
-        //listing a product to seller manually - disable when not needed please
-       //  seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
-       //  seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
-       //  seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
+        seller1=null;
+        seller2=null;
+        System.gc();
+         Seller seller1=new Seller("one","password");
+         Seller seller2=new Seller("two","password");
         
-        // do serialization only when : add\edit product AND when sold product
-       //  seller1.seri();
-       //  seller2.seri();
+        //listing a product to seller manually - disable when not needed please
+        if (seller1.inventory.inventory.isEmpty()){
+            seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
+            seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
+            seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
+
+           // do serialization only when : add\edit product AND when sold product
+            seller1.seri();
+            seller2.seri();
+        }
         
         StoreSystem storeSys = new StoreSystem(which);
 
@@ -266,7 +279,7 @@ public class StoreSystem extends JPanel{
             }
         });
     }//end of main
-    
+   
 }//end of StoreSystem class
 
         /*

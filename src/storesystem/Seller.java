@@ -17,7 +17,7 @@ import java.io.ObjectOutputStream;
 public class Seller extends User{
     
     Inventory inventory=new Inventory();
-    private void doDeSerialization(){
+    public void doDeSerialization(){
         
          try
       {
@@ -51,7 +51,8 @@ public class Seller extends User{
         this.doDeSerialization();
      
     }
-    public Boolean seri(){
+
+    public  Boolean seri(){
         
         try
       {
@@ -61,7 +62,7 @@ public class Seller extends User{
          out.writeObject(inventory);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in "+super.name+".seri\n");
+         //System.out.printf("Serialized data is saved in "+super.name+".seri\n");
       }catch(IOException i)
       {
           i.printStackTrace();

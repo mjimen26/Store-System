@@ -17,16 +17,11 @@ import java.io.ObjectOutputStream;
 public class Seller extends User{
     
     Inventory inventory=new Inventory();
-    
-    
-    public Seller(String user,String pass){
-        super.name=user;
-        super.password=pass;
-        super.type=2;
-   
-    try
+    private void doDeSerialization(){
+        
+         try
       {
-         FileInputStream fileIn = new FileInputStream(user+".seri");
+         FileInputStream fileIn = new FileInputStream(this.name+".seri");
          ObjectInputStream in = new ObjectInputStream(fileIn);
          inventory = (Inventory) in.readObject();
          in.close();
@@ -44,11 +39,17 @@ public class Seller extends User{
          System.out.println("Employee class not found");
          c.printStackTrace();
          return;
-      }     
-       
+      }
         
-        
-        
+    }
+    
+    
+    public Seller(String user,String pass){
+        super.name=user;
+        super.password=pass;
+        super.type=2;
+        this.doDeSerialization();
+     
     }
     public Boolean seri(){
         

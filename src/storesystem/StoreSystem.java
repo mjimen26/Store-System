@@ -128,11 +128,13 @@ public class StoreSystem extends JPanel{
         //for(int x=0; x<pProduct.size(); x++){
         //final Product p;
         int i=-1;
+        final User currentUser=current;
           for (Product pp:pProduct){  
               i++;
               final Product curent=pp;
               //SAVE WHICH KIND OF USER AS FINAL
             JPanel check = new JPanel(new BorderLayout());
+            
             JPanel name = new JPanel(new BorderLayout());
              //final Product p=pp;
             
@@ -140,44 +142,9 @@ public class StoreSystem extends JPanel{
                   
                   @Override
                 public void mouseClicked(MouseEvent e) {
-                      final Product current=curent;
-                    // you can open a new frame here as
-                    // i have assumed you have declared "frame" as instance variable
-                    Frame frame = new JFrame(current.getProductName());//pp.getPicture());
-                    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    
-                    Image image = null;
-                    try {
-                        URL url = new URL(current.getPicture());
-                        image = ImageIO.read(url);
-                    } 
-                    catch (IOException ee) {
-                            ee.printStackTrace();
-                    }
-                    JLabel label = new JLabel(new ImageIcon(image));
-                    
-                    frame.add(label);
-                    System.out.println("Added Picture!!!!");
-                     TextField textField1=new TextField(current.getDescription());
-                     textField1.setFont(new Font("Serif",Font.BOLD,40));
-                     TextField textField2=new TextField(current.getProductName());
-                     TextField textField3=new TextField(Double.toString(current.getInvoicePrice()));     
-                     textField1.setEditable(false);
-                     textField2.setEditable(false);
-                     textField3.setEditable(false);
-                     JPanel listPane = new JPanel();
-                     listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-                     listPane.add(label);
-                     listPane.add(textField1);
-                     listPane.add(textField2);
-                     listPane.add(textField3); 
-                     frame.add(listPane);
-
-                    
-                    frame.setAlwaysOnTop(true);
-                    frame.setSize(300, 500);
-                    frame.setLocation(350, 400);
-                    frame.setVisible(true);
+                      final Product currentProduct=curent;
+                      currentProduct.showProduct(currentUser.type);
+                  System.out.println("This is a user type DSFSDFSDFSDFSDFSDF\n\n\nDFSDFSDFSDFSDFSDFSDF "+currentUser.type);
                     }
                 }); 
             JPanel sell = new JPanel(new BorderLayout());
@@ -280,13 +247,13 @@ public class StoreSystem extends JPanel{
     
     public  void main() {
         //listing a product to seller manually - disable when not needed please
-        // seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
-        // seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
-        // seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
+       //  seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
+       //  seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
+       //  seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
         
         // do serialization only when : add\edit product AND when sold product
-        // seller1.seri();
-        // seller2.seri();
+       //  seller1.seri();
+       //  seller2.seri();
         
         StoreSystem storeSys = new StoreSystem(which);
 

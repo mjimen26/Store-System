@@ -47,6 +47,7 @@ public class Product implements Serializable{
         this.sellPrice=sellPrice;
         this.quantity=quantity;
         this.picture=picture;
+        this.sold=0;
     }
         public Product(){
         this.description = "";
@@ -56,6 +57,7 @@ public class Product implements Serializable{
         this.sellPrice=0;
         this.quantity=0;
         this.picture="http://i654.photobucket.com/albums/uu265/angflyer/bth_unknown.jpg";
+        this.sold=0;
     }
     
     public double getSellPrice(){

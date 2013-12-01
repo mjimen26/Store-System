@@ -94,7 +94,7 @@ public class StoreSystem extends JPanel{
             //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
             System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
-                if (p.getQuantity()>0){
+                {
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
                     //pName.add(p.getProductName());
@@ -108,7 +108,7 @@ public class StoreSystem extends JPanel{
             //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
             System.out.println("this is logged in: "+current.name);
             for (Product p:seller2.inventory.inventory){
-                if (p.getQuantity()>0){
+                {
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
                     //pName.add(p.getProductName());

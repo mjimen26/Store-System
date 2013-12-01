@@ -19,12 +19,15 @@ public class CheckoutSystem extends JPanel{
     //The Main Panel of Checkout
     private JPanel checkoutPanel = new JPanel();
     public static JFrame frame = new JFrame("Checkout Window");
+   ArrayList <Product> toBuyList;//=new ArrayList<Product>(); 
     
-    public CheckoutSystem(){
+    public CheckoutSystem(ArrayList <Product> toBuy){
+        toBuyList=toBuy;
         checkoutPanel.setLayout(new BorderLayout());
         
         JPanel textPanel = new JPanel();
         final JTextArea text = new JTextArea(10,50);
+        text.setText(toBuyList.get(1).getPicture());
         textPanel.add(new JScrollPane(text));
         
         JPanel buttonPanel = new JPanel(new GridLayout(1,3));
@@ -85,9 +88,10 @@ public class CheckoutSystem extends JPanel{
         dialog.setVisible(true);  
     }
     
-    public void main(){
+    public void main(ArrayList <Product> toBuy){
         
-        frame.getContentPane().add(new CheckoutSystem().getCheckoutPanel());
+        toBuyList=toBuy;
+        frame.getContentPane().add(new CheckoutSystem(toBuy).getCheckoutPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);

@@ -209,10 +209,17 @@ public class StoreSystem extends JPanel{
         //Checkout Listener
         checkoutButton.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                CheckoutSystem check = new CheckoutSystem();
+                ArrayList <Product> toBuy = new ArrayList<Product>();
+                int i=-1;
+                for (Product pp:pProduct){
+                        i++;
+                        if (checkBoxes.get(i).isSelected())
+                            toBuy.add(pp);
+                  }
+                CheckoutSystem check = new CheckoutSystem(toBuy);
                 check.setVisible(true);
-                check.main();
-                //dispose();
+                check.main(toBuy);
+                frame.dispose();
             }
         });
         
@@ -221,7 +228,11 @@ public class StoreSystem extends JPanel{
                 Product newProduct=new Product();
                 ((Seller)current).inventory.addProduct(newProduct);
                 newProduct.showProduct(current);
+
                 frame.dispose();
+                
+                //frame.repaint();
+                
             }
         });
     
@@ -275,8 +286,8 @@ public class StoreSystem extends JPanel{
             seller1.seri();
             seller2.seri();
         }
-        
-        StoreSystem storeSys = new StoreSystem(which);
+        ////////////////////////????????????????//////////////////////
+        //StoreSystem storeSys = new StoreSystem(which);
 
         //Call to Create StoreSystem UI
         java.awt.EventQueue.invokeLater(new Runnable()

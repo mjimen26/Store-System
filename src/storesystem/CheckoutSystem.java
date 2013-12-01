@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionListener;
 public class CheckoutSystem extends JPanel{
     JTextField prodTxt = new JTextField();    
     JTextField qtyTxt = new JTextField();
-        
+    final JList list = new JList();    
     
     //The Main Panel of Checkout
     private JPanel checkoutPanel = new JPanel();
@@ -38,7 +38,25 @@ public class CheckoutSystem extends JPanel{
             quantities.add(1);
         }
 
-        final JList list = new JList();
+        qtyTxt.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+                
+                int index=list.getSelectedIndex();                             
+                System.out.println("The index is::::::::::::"+index);
+                if (Integer.parseInt(qtyTxt.getText())<=0){
+                                   JOptionPane.showMessageDialog(null,
+                                           "Error: Please enter number bigger than 0", "Error Massage",
+                                           JOptionPane.ERROR_MESSAGE);
+                               }  
+                if (Integer.parseInt(qtyTxt.getText())>quantities.get(index)){
+                                   JOptionPane.showMessageDialog(null,
+                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
+                                           JOptionPane.ERROR_MESSAGE);
+                               }
+     }
+});
+       
         
         list.setModel(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

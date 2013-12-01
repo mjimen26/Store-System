@@ -48,6 +48,15 @@ public class Product implements Serializable{
         this.quantity=quantity;
         this.picture=picture;
     }
+        public Product(){
+        this.description = "";
+        this.productID="";
+        this.productName="";
+        this.invoicePrice=0;
+        this.sellPrice=0;
+        this.quantity=0;
+        this.picture="http://i654.photobucket.com/albums/uu265/angflyer/bth_unknown.jpg";
+    }
     
     public double getSellPrice(){
         return sellPrice;

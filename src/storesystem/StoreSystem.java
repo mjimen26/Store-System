@@ -146,7 +146,9 @@ public class StoreSystem extends JPanel{
                       //final Product currentProduct=curent;
                       curent.showProduct(currentUser);
                       //currentProduct.showProduct(currentUser);
-                      frame.dispose();
+                      if (current.type==2)   
+                          frame.dispose();
+                      
                     }
                 }); 
             JPanel sell = new JPanel(new BorderLayout());
@@ -184,6 +186,7 @@ public class StoreSystem extends JPanel{
         final JTextArea textArea = new JTextArea(10,50);
         JButton addButton = new JButton("Update Cart");
         JButton checkoutButton = new JButton("Checkout");
+        JButton addNewProduct = new JButton("Add New Product");
         
         //Update Listener
         addButton.addMouseListener(new MouseAdapter()  {
@@ -212,11 +215,21 @@ public class StoreSystem extends JPanel{
                 //dispose();
             }
         });
+        
+          addNewProduct.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                Product newProduct=new Product();
+                ((Seller)current).inventory.addProduct(newProduct);
+                newProduct.showProduct(current);
+                frame.dispose();
+            }
+        });
     
         //JComponents for Shopping Cart
         JPanel ctrlPanel = new JPanel(new GridLayout(0,2));
-        ctrlPanel.add(addButton);
-        ctrlPanel.add(checkoutButton);
+        if (current.type==1) ctrlPanel.add(addButton);
+        if (current.type==1) ctrlPanel.add(checkoutButton);     //show check out only for buyer
+        else ctrlPanel.add(addNewProduct);     //show add new only for seller
         
         //the entire South Panel
         southPanel.add(new JScrollPane(textArea), BorderLayout.NORTH);
@@ -251,11 +264,6 @@ public class StoreSystem extends JPanel{
     User current;
     
     public  void main() {
-        seller1=null;
-        seller2=null;
-        System.gc();
-         Seller seller1=new Seller("one","password");
-         Seller seller2=new Seller("two","password");
         
         //listing a product to seller manually - disable when not needed please
         if (seller1.inventory.inventory.isEmpty()){

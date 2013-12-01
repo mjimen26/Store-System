@@ -9,12 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Administrator
  */
 public class CheckoutSystem extends JPanel{
+    JTextField prodTxt = new JTextField();    
+    JTextField qtyTxt = new JTextField();
+        
     
     //The Main Panel of Checkout
     private JPanel checkoutPanel = new JPanel();
@@ -27,13 +32,38 @@ public class CheckoutSystem extends JPanel{
         
         JPanel textPanel = new JPanel();
         DefaultListModel model = new DefaultListModel();
-        for (Product currentProduct:toBuy)
-            model.addElement(currentProduct.getProductName()+" $"+currentProduct.getInvoicePrice());
+       final ArrayList <Integer> quantities=new ArrayList <Integer>();
+        for (Product currentProduct:toBuy){
+            model.addElement(currentProduct.getProductName()+"          $"+currentProduct.getInvoicePrice()+"       Available: "+currentProduct.getQuantity());
+            quantities.add(1);
+        }
 
         final JList list = new JList();
-        list.setSize(10, 50);
+        
         list.setModel(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        if (!e.getValueIsAdjusting()) {
+//                            DocumentWrapper docWrapper = (DocumentWrapper) list
+//                                    .getSelectedValue();
+//                            if (docWrapper != null) {
+//                                output.setText(docWrapper.getData());
+//                            } else {
+//                                output.setText("");
+//                            }
+                            int index=list.getSelectedIndex();
+                            String thisOne =(toBuyList.get(index)).getProductName();
+                            System.out.println (thisOne);
+                            prodTxt.setText(thisOne);
+                            qtyTxt.setText(Integer.toString(quantities.get(index)));
+                            //quantities.set(list.getSelectedIndex(), WIDTH)
+                            
+                        }
+                    }
+                });
 
        // final JTextArea text = new JTextArea(10,50);
         //text.setText(toBuyList.get(1).getPicture());
@@ -57,9 +87,9 @@ public class CheckoutSystem extends JPanel{
         JPanel rightPanel = new JPanel();
         
         JLabel prodLbl = new JLabel("Product ID:");
-        JTextField prodTxt = new JTextField();
         JLabel qtyLbl = new JLabel("Quantity:");
-        JTextField qtyTxt = new JTextField();
+        prodTxt.setEditable(false);
+        
         JButton updateBtn = new JButton("Update");
         
         leftPanel.add(prodLbl);

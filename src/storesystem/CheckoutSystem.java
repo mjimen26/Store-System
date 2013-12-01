@@ -38,24 +38,24 @@ public class CheckoutSystem extends JPanel{
             quantities.add(1);
         }
 
-        qtyTxt.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-    public void actionPerformed(java.awt.event.ActionEvent e) {
-                
-                int index=list.getSelectedIndex();                             
-                System.out.println("The index is::::::::::::"+index);
-                if (Integer.parseInt(qtyTxt.getText())<=0){
-                                   JOptionPane.showMessageDialog(null,
-                                           "Error: Please enter number bigger than 0", "Error Massage",
-                                           JOptionPane.ERROR_MESSAGE);
-                               }  
-                if (Integer.parseInt(qtyTxt.getText())>quantities.get(index)){
-                                   JOptionPane.showMessageDialog(null,
-                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
-                                           JOptionPane.ERROR_MESSAGE);
-                               }
-     }
-});
+//        qtyTxt.addActionListener(new java.awt.event.ActionListener() {
+//            @Override
+//    public void actionPerformed(java.awt.event.ActionEvent e) {
+//                
+//                int index=list.getSelectedIndex();                             
+//                System.out.println("The index is::::::::::::"+index);
+//                if (Integer.parseInt(qtyTxt.getText())<=0){
+//                                   JOptionPane.showMessageDialog(null,
+//                                           "Error: Please enter number bigger than 0", "Error Massage",
+//                                           JOptionPane.ERROR_MESSAGE);
+//                               }  
+//                if (Integer.parseInt(qtyTxt.getText())>quantities.get(index)){
+//                                   JOptionPane.showMessageDialog(null,
+//                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
+//                                           JOptionPane.ERROR_MESSAGE);
+//                               }
+//     }
+//});
        
         
         list.setModel(model);
@@ -109,6 +109,28 @@ public class CheckoutSystem extends JPanel{
         prodTxt.setEditable(false);
         
         JButton updateBtn = new JButton("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+                
+                int index=list.getSelectedIndex();                             
+                System.out.println("The index is::::::::::::"+index+" available: "+toBuyList.get(index).getQuantity());
+                if (Integer.parseInt(qtyTxt.getText())<0){
+                                   JOptionPane.showMessageDialog(null,
+                                           "Error: Please enter a non-negative number\n", "Error Massage",
+                                           JOptionPane.ERROR_MESSAGE);
+                               }  
+                else if (Integer.parseInt(qtyTxt.getText())>toBuyList.get(index).getQuantity()){
+                                   JOptionPane.showMessageDialog(null,
+                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
+                                           JOptionPane.ERROR_MESSAGE);
+                               }
+                else{
+                    quantities.set(index, Integer.parseInt(qtyTxt.getText()));
+                    
+                }
+     }
+});
         
         leftPanel.add(prodLbl);
         leftPanel.add(prodTxt);

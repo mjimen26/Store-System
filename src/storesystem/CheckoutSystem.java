@@ -26,9 +26,18 @@ public class CheckoutSystem extends JPanel{
         checkoutPanel.setLayout(new BorderLayout());
         
         JPanel textPanel = new JPanel();
-        final JTextArea text = new JTextArea(10,50);
-        text.setText(toBuyList.get(1).getPicture());
-        textPanel.add(new JScrollPane(text));
+        DefaultListModel model = new DefaultListModel();
+        for (Product currentProduct:toBuy)
+            model.addElement(currentProduct.getProductName()+" $"+currentProduct.getInvoicePrice());
+
+        final JList list = new JList();
+        list.setSize(10, 50);
+        list.setModel(model);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+       // final JTextArea text = new JTextArea(10,50);
+        //text.setText(toBuyList.get(1).getPicture());
+        textPanel.add(new JScrollPane(list));
         
         JPanel buttonPanel = new JPanel(new GridLayout(1,3));
         JButton cancelButton = new JButton("Cancel");

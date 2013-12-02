@@ -175,7 +175,7 @@ public class Product implements Serializable{
         frame.add(listPane, BorderLayout.CENTER);
         frame.add(saveButton, BorderLayout.SOUTH);
         frame.setAlwaysOnTop(true);
-        frame.setSize(370, 500);
+        frame.setSize(400, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         }
@@ -197,7 +197,7 @@ public class Product implements Serializable{
         JLabel label = new JLabel(new ImageIcon(image));
         frame.add(label, BorderLayout.NORTH);
         
-        System.out.println("Added Picture!!!!");
+        //System.out.println("Added Picture!!!!");
         JLabel textField1 = new JLabel(this.getDescription());
         textField1.setFont(new Font("Serif",Font.BOLD,24));
         JLabel textField2 = new JLabel(this.getProductName());
@@ -214,7 +214,7 @@ public class Product implements Serializable{
         
         frame.add(listPane, BorderLayout.CENTER);
         frame.setAlwaysOnTop(true);
-        frame.setSize(300, 425);
+        frame.setSize(400, 550);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

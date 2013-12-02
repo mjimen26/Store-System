@@ -7,7 +7,10 @@ package storesystem;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -171,8 +174,23 @@ public class CheckoutSystem extends JPanel{
     private static void openDialog(Frame f){
         final JDialog dialog = new JDialog(f, "Success!", true);
         JPanel panel = new JPanel();  
-        JLabel label = new JLabel("Thank you for buying at Z-Bay! OFTG");
         
+        JLabel label = new JLabel("Thank you for buying at Z-Bay! OFTG");
+        label.setFont(new Font(label.getName(), Font.PLAIN, (int)label.getFont().getSize()+10));
+        Icon icon = null;
+        try {
+            URL url = new URL("http://i109.photobucket.com/albums/n50/towardsthelight/Thanks/MonkeyThanks.gif");
+            icon = new ImageIcon(url);
+        } 
+        catch (IOException ee) {
+            ee.printStackTrace();
+        }
+        
+        JLabel label2 = new JLabel(icon);
+        
+        
+        
+        panel.add(label2);
         panel.add(label);
         
         String input =  JOptionPane.showInputDialog(dialog,"Enter the Credit Card Number:");
@@ -188,7 +206,7 @@ public class CheckoutSystem extends JPanel{
             seller1.seri();
             seller2.seri();
             dialog.getContentPane().add(panel);  
-            dialog.setSize(250,80);  
+            dialog.setSize(450,350);  
             dialog.setLocationRelativeTo(f);  
             dialog.setVisible(true);  
         }

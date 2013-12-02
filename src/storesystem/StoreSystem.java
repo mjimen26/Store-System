@@ -198,9 +198,9 @@ public class StoreSystem extends JPanel{
                     for (Product pp:pProduct){
                         i++;
                         if (checkBoxes.get(i).isSelected())
-                            toSet+=pp.getProductName()+" "
-                                    +pp.getInvoicePrice()+" "
-                                    +pp.getDescription()+"\n";
+                            toSet+="Name: "+pp.getProductName()+
+                                    "\tPrice: "+pp.getInvoicePrice()+
+                                    "\tDescription: "+pp.getDescription()+"\n";
                         }
                     textArea.setText(toSet);
                     southPanel.repaint();
@@ -300,9 +300,21 @@ public class StoreSystem extends JPanel{
         
         //listing a product to seller manually - disable when not needed please
         if (seller1.inventory.inventory.isEmpty()){
-            seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
-            seller1.inventory.addProduct(new Product("productID2","productName2",2.2, 1.1,10, "http://vk.com/images/gifts/256/455.jpg","A bear"));
-            seller1.inventory.addProduct(new Product("productID3","productName3" ,3.3, 1.1,15, "http://vk.com/images/gifts/256/462.jpg","Plastic soldier"));
+            //seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
+            seller1.inventory.addProduct(new Product("11","Bicycle",1990.50,    2149.99,    1, "http://static.bootic.com/_pictures/1394318/400x400/trek-top-fuel-9-9-ssl.jpg", "Trek Top Fuel 9.9 SSL 2011"));
+            seller1.inventory.addProduct(new Product("12","Snorkel" ,12.00,     15.55,      10, "http://feeds2.yourstorewizards.com/1749/images/400x400/us-divers-cozumel-diving-mask-seabreeze-snorkel-and-proflex-fins-snorkeling-set.jpg","A snorkel set"));
+            seller1.inventory.addProduct(new Product("13","Monster" ,6.99,      13.13,      12, "http://www.meijer.com/assets/product_images/styles/xlarge/1000896_801471BS_A_400.jpg","Kids Monster INC. Costume"));
+            seller1.inventory.addProduct(new Product("14","Lighter" ,1.5,       2.99,       75, "http://www.freshpromotions.com.au/products/promotionallighter11.jpg","Plastic lighter, random color"));
+            seller1.inventory.addProduct(new Product("15","Journal" ,3.0,       3.33,       20, "http://images6.fanpop.com/image/photos/34300000/barbie-magazine-barbie-movies-34389436-400-400.jpg","Barbie Magazine, latest edition"));
+            seller1.inventory.addProduct(new Product("16","Bobcats" ,700,       949.99,     1, "http://photos.bwca.com/u/UNAS10-070112-045939.JPG","Used, in good condition"));
+            
+            seller2.inventory.addProduct(new Product("21","Oranges" ,7.50,      9.99,       20, "http://images.honeybell.com/is/image/honeybell/feature2010/1320_NR10-christmas-red-navels-large-sampler.jpg","Red Oranges, 3Lb."));
+            seller2.inventory.addProduct(new Product("22","Binders" ,1.5,       3.0,        15, "http://us.123rf.com/400wm/400/400/franckito/franckito0809/franckito080900081/3619034-3d-rendering-of-a-group-of-ring-binders-in-different-colors.jpg","1200 pages binder, random color"));
+            seller2.inventory.addProduct(new Product("23","Speaker" ,55.03,     97.5,        25, "http://www.seismicaudiospeakers.com/v/vspfiles/photos/SA-12T-2.jpg","12 Pro Audio: DJ Speaker"));
+            seller2.inventory.addProduct(new Product("24","Dusters" ,7.0,       15.50,      20, "http://img2.wfrcdn.com/lf/49/hash/3907/3507081/1/Ultrajet®+Dusters+-+8+oz.+ultrajet+all-way+duster+aerosol.jpg","Chemtronics Ultrajet® Dusters-8oz."));
+            seller2.inventory.addProduct(new Product("25","Needles" ,1.15,      2.15,       35, "http://img2.timeinc.net/health/images/gallery/condition-centers/needle-syringe-400x400.jpg","Needle and syringe: 10cc capacity"));
+            seller2.inventory.addProduct(new Product("26","Bubbles" ,0.99,      1.79,       50, "http://ecx.images-amazon.com/images/I/51TKrGtToiL.jpg","Miracle Bubbles Party Bubbles, 6-PackRead"));
+            
 
            // do serialization only when : add\edit product AND when sold product
             seller1.seri();

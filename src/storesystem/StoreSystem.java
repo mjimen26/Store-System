@@ -185,6 +185,7 @@ public class StoreSystem extends JPanel{
         southPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea(10,50);
         JButton addButton = new JButton("Update Cart");
+        JButton viewTransactions = new JButton("View Transactions");
         JButton checkoutButton = new JButton("Checkout");
         JButton addNewProduct = new JButton("Add New Product");
         
@@ -205,7 +206,27 @@ public class StoreSystem extends JPanel{
                     southPanel.repaint();
             }
         }); 
-        
+        //View Transactions Listener
+        viewTransactions.addMouseListener(new MouseAdapter()  {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                double revenues=0,costs=0;
+                String toSet="";
+                    
+                    for (Product pp:pProduct){
+                        revenues+=pp.getSellPrice()*pp.getSold();
+                        costs+=pp.getInvoicePrice()*(pp.getSold()+pp.getQuantity());
+                        toSet+="Item: "+pp.getProductName()+
+                                "     Quantity sold: "+pp.getSold()+
+                                "     Quantity availble "+pp.getQuantity()+
+                                "     Invoice price: "+pp.getInvoicePrice()+
+                                "     Sell price:  "+pp.getSellPrice()+"\n";
+                        }
+                    toSet+="\nREVENUES: "+revenues+"     COSTS: "+costs+"     PROFIT: "+(revenues-costs);
+                    textArea.setText(toSet);
+                    southPanel.repaint();
+            }
+        }); 
         //Checkout Listener
         checkoutButton.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
@@ -239,6 +260,7 @@ public class StoreSystem extends JPanel{
         //JComponents for Shopping Cart
         JPanel ctrlPanel = new JPanel(new GridLayout(0,2));
         if (current.type==1) ctrlPanel.add(addButton);
+        else ctrlPanel.add(viewTransactions);
         if (current.type==1) ctrlPanel.add(checkoutButton);     //show check out only for buyer
         else ctrlPanel.add(addNewProduct);     //show add new only for seller
         

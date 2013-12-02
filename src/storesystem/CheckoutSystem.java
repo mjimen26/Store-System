@@ -24,15 +24,19 @@ public class CheckoutSystem extends JPanel{
     //The Main Panel of Checkout
     private JPanel checkoutPanel = new JPanel();
     public static JFrame frame = new JFrame("Checkout Window");
-   ArrayList <Product> toBuyList;//=new ArrayList<Product>(); 
+   static ArrayList <Product> toBuyList;//=new ArrayList<Product>(); 
+   static Seller seller1,seller2;
+    static final ArrayList <Integer> quantities=new ArrayList <Integer>();
     
-    public CheckoutSystem(ArrayList <Product> toBuy){
+    public CheckoutSystem(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2){
         toBuyList=toBuy;
+        seller1=seller_1;
+        seller2=seller_2;
         checkoutPanel.setLayout(new BorderLayout());
         
         JPanel textPanel = new JPanel();
         DefaultListModel model = new DefaultListModel();
-       final ArrayList <Integer> quantities=new ArrayList <Integer>();
+       
         for (Product currentProduct:toBuy){
             model.addElement(currentProduct.getProductName()+"          $"+currentProduct.getInvoicePrice()+"       Available: "+currentProduct.getQuantity());
             quantities.add(1);
@@ -95,6 +99,7 @@ public class CheckoutSystem extends JPanel{
         
         payButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                frame.dispose();
                 openDialog(frame);
             }
         });
@@ -114,7 +119,7 @@ public class CheckoutSystem extends JPanel{
     public void actionPerformed(java.awt.event.ActionEvent e) {
                 
                 int index=list.getSelectedIndex();                             
-                System.out.println("The index is::::::::::::"+index+" available: "+toBuyList.get(index).getQuantity());
+                //System.out.println("The index is::::::::::::"+index+" available: "+toBuyList.get(index).getQuantity());
                 if (Integer.parseInt(qtyTxt.getText())<0){
                                    JOptionPane.showMessageDialog(null,
                                            "Error: Please enter a non-negative number\n", "Error Massage",
@@ -122,8 +127,9 @@ public class CheckoutSystem extends JPanel{
                                }  
                 else if (Integer.parseInt(qtyTxt.getText())>toBuyList.get(index).getQuantity()){
                                    JOptionPane.showMessageDialog(null,
-                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
+                                           "Error: Not enough available product, please buy up to the available quantity!", "Error Massage",
                                            JOptionPane.ERROR_MESSAGE);
+                                           qtyTxt.setText(Integer.toString(quantities.get(index)));
                                }
                 else{
                     quantities.set(index, Integer.parseInt(qtyTxt.getText()));
@@ -154,23 +160,36 @@ public class CheckoutSystem extends JPanel{
     private static void openDialog(Frame f){
         final JDialog dialog = new JDialog(f, "Success!", true);
         JPanel panel = new JPanel();  
-        JLabel label = new JLabel("Thank you for buying at Z-Bay! GTFO");
+        JLabel label = new JLabel("Thank you for buying at Z-Bay! OFTG");
         
         panel.add(label);
         
         String input =  JOptionPane.showInputDialog(dialog 
        ,"Enter the Credit Card Number:");
-        
+        int i=-1;
+        for (Product currentProduct: toBuyList){
+            i++; 
+            currentProduct.sell(quantities.get(i));
+            //System.out.println("sold "+quantities.get(i)+" "+currentProduct.getDescription());
+            //System.out.println("new available quantiity: "+currentProduct.getQuantity());
+            //quantities.get(i);
+        }
+        seller1.seri();
+        seller2.seri();
         dialog.getContentPane().add(panel);  
         dialog.setSize(250,80);  
         dialog.setLocationRelativeTo(f);  
         dialog.setVisible(true);  
+        
     }
     
-    public void main(ArrayList <Product> toBuy){
+    public void main(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2){
         
         toBuyList=toBuy;
-        frame.getContentPane().add(new CheckoutSystem(toBuy).getCheckoutPanel());
+        seller1=seller_1;
+        seller2=seller_2;
+        
+        frame.getContentPane().add(new CheckoutSystem(toBuy,seller1,seller2).getCheckoutPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);

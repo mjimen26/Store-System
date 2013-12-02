@@ -216,9 +216,9 @@ public class StoreSystem extends JPanel{
                         if (checkBoxes.get(i).isSelected())
                             toBuy.add(pp);
                   }
-                CheckoutSystem check = new CheckoutSystem(toBuy);
+                CheckoutSystem check = new CheckoutSystem(toBuy,seller1,seller2);
                 check.setVisible(true);
-                check.main(toBuy);
+                check.main(toBuy,seller1,seller2);
                 frame.dispose();
             }
         });

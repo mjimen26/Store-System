@@ -81,6 +81,10 @@ public class Product implements Serializable{
     } public int getSold(){
         return sold;
     }
+    public void sell(int x){
+        sold+=x;
+        quantity-=x;
+    }
     
     public void showProduct(User user){
         

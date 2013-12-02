@@ -26,13 +26,15 @@ public class CheckoutSystem extends JPanel{
     public static JFrame frame = new JFrame("Checkout Window");
    static ArrayList <Product> toBuyList;//=new ArrayList<Product>(); 
    static Seller seller1,seller2;
+   static String which;
     static final ArrayList <Integer> quantities=new ArrayList <Integer>();
     
-    public CheckoutSystem(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2){
+    public CheckoutSystem(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2,String who){
         toBuyList=toBuy;
         seller1=seller_1;
         seller2=seller_2;
         checkoutPanel.setLayout(new BorderLayout());
+        which=who;
         
         JPanel textPanel = new JPanel();
         DefaultListModel model = new DefaultListModel();
@@ -96,6 +98,15 @@ public class CheckoutSystem extends JPanel{
         JButton payButton = new JButton("Pay Now");
         buttonPanel.add(cancelButton);
         buttonPanel.add(payButton);
+        
+        cancelButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                frame.dispose();
+                StoreSystem regFace= new StoreSystem(which);
+                regFace.setVisible(true);
+                regFace.main();
+            }
+        });
         
         payButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -164,32 +175,42 @@ public class CheckoutSystem extends JPanel{
         
         panel.add(label);
         
-        String input =  JOptionPane.showInputDialog(dialog 
-       ,"Enter the Credit Card Number:");
-        int i=-1;
-        for (Product currentProduct: toBuyList){
-            i++; 
-            currentProduct.sell(quantities.get(i));
-            //System.out.println("sold "+quantities.get(i)+" "+currentProduct.getDescription());
-            //System.out.println("new available quantiity: "+currentProduct.getQuantity());
-            //quantities.get(i);
+        String input =  JOptionPane.showInputDialog(dialog,"Enter the Credit Card Number:");
+        if (input!=null){
+            int i=-1;
+            for (Product currentProduct: toBuyList){
+                i++; 
+                currentProduct.sell(quantities.get(i));
+                //System.out.println("sold "+quantities.get(i)+" "+currentProduct.getDescription());
+                //System.out.println("new available quantiity: "+currentProduct.getQuantity());
+                //quantities.get(i);
+            }
+            seller1.seri();
+            seller2.seri();
+            dialog.getContentPane().add(panel);  
+            dialog.setSize(250,80);  
+            dialog.setLocationRelativeTo(f);  
+            dialog.setVisible(true);  
         }
-        seller1.seri();
-        seller2.seri();
-        dialog.getContentPane().add(panel);  
-        dialog.setSize(250,80);  
-        dialog.setLocationRelativeTo(f);  
-        dialog.setVisible(true);  
+        else {
+            frame.dispose();
+            StoreSystem regFace= new StoreSystem(which);
+            regFace.setVisible(true);
+            regFace.main();
+            
+        }
+        
         
     }
     
-    public void main(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2){
+    public void main(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2,String who){
         
         toBuyList=toBuy;
         seller1=seller_1;
         seller2=seller_2;
+        which=who;
         
-        frame.getContentPane().add(new CheckoutSystem(toBuy,seller1,seller2).getCheckoutPanel());
+        frame.getContentPane().add(new CheckoutSystem(toBuy,seller1,seller2,which).getCheckoutPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);

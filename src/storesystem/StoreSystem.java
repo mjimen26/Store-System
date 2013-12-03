@@ -167,7 +167,8 @@ public class StoreSystem extends JPanel{
         }
         
         //add the panels to centerPanel
-        centerPanel.add(checkPanel);
+        if ((current.type==1))
+            centerPanel.add(checkPanel);
         centerPanel.add(namePanel);
         centerPanel.add(spricePanel);
         centerPanel.add(qtyPanel);

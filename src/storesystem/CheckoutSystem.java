@@ -23,11 +23,12 @@ import javax.swing.event.ListSelectionListener;
 public class CheckoutSystem extends JPanel{
     JTextField prodTxt = new JTextField();    
     JTextField qtyTxt = new JTextField();
-    JTextField ttlTxt = new JTextField();
+    //JTextField ttlTxt = new JTextField();
+    JLabel ttlTxtt = new JLabel();
     final JList list = new JList();    
     
     //The Main Panel of Checkout
-    private JPanel checkoutPanel = new JPanel();
+    private  JPanel checkoutPanel = new JPanel();
     public static JFrame frame = new JFrame("Checkout Window");
    static ArrayList <Product> toBuyList;//=new ArrayList<Product>(); 
    static Seller seller1,seller2;
@@ -76,7 +77,7 @@ public class CheckoutSystem extends JPanel{
                 });
 
         textPanel.add(new JScrollPane(list));
-        textPanel.add(ttlTxt);
+        textPanel.add(ttlTxtt);
         
         int i=-1;
         double total=0;
@@ -86,7 +87,7 @@ public class CheckoutSystem extends JPanel{
                     }
                         DecimalFormat df = new DecimalFormat("#.##");
                         //toSet+="\nTOTAL:  $"+df.format(total);
-                       ttlTxt.setText("TOTAL:  $"+df.format(total));
+                       ttlTxtt.setText("TOTAL:  $"+df.format(total));
                     
         
         
@@ -100,6 +101,7 @@ public class CheckoutSystem extends JPanel{
         cancelButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
+                checkoutPanel.resize(1 ,1);
                 StoreSystem regFace= new StoreSystem(which);
                 regFace.setVisible(true);
                 regFace.main();
@@ -108,7 +110,7 @@ public class CheckoutSystem extends JPanel{
         
         payButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                frame.dispose();
+                //frame.dispose();
                 openDialog(frame);
             }
         });
@@ -149,7 +151,7 @@ public class CheckoutSystem extends JPanel{
                     }
                         DecimalFormat df = new DecimalFormat("#.##");
                         //toSet+="\nTOTAL:  $"+df.format(total);
-                       ttlTxt.setText("TOTAL:  $"+df.format(total));
+                       ttlTxtt.setText("TOTAL:  $"+df.format(total));
                     }
 
      }
@@ -178,7 +180,7 @@ public class CheckoutSystem extends JPanel{
         final JDialog dialog = new JDialog(f, "Success!", true);
         JPanel panel = new JPanel();  
         
-        JLabel label = new JLabel("Thank you for buying at Z-Bay! OFTG");
+        JLabel label = new JLabel("Thank you for buying at Z-Bay!");
         label.setFont(new Font(label.getName(), Font.PLAIN, (int)label.getFont().getSize()+10));
         Icon icon = null;
         try {
@@ -205,16 +207,19 @@ public class CheckoutSystem extends JPanel{
             }
             seller1.seri();
             seller2.seri();
+            frame.dispose();
             dialog.getContentPane().add(panel);  
             dialog.setSize(450,350);  
             dialog.setLocationRelativeTo(f);  
-            dialog.setVisible(true);  
+            dialog.setVisible(true); 
+            
         }
         else {
             frame.dispose();
-            StoreSystem regFace= new StoreSystem(which);
-            regFace.setVisible(true);
-            regFace.main();
+//            checkoutPanel.resize(1, 1);
+//            StoreSystem regFace= new StoreSystem(which);
+//            regFace.setVisible(true);
+//            regFace.main();
             
         }
         

@@ -27,7 +27,8 @@ public class StoreSystem extends JPanel{
     final ShoppingCart cart = new ShoppingCart();
     final ShoppingCartFormatter formatter = new SimpleFormatter();
     static JFrame frame = new JFrame("Welcome back " ); 
-        
+    JPanel centerPanel; 
+    JPanel southPanel;
     //The Main Panel
     private JPanel mainPanel = new JPanel();    
     public StoreSystem(){}
@@ -40,8 +41,8 @@ public class StoreSystem extends JPanel{
         if (seller1.name.equals(which)) current=seller1;
         if (seller2.name.equals(which)) current=seller2;
       
-        JPanel centerPanel = createCenterPanel();
-        JPanel southPanel = createSouthPanel();
+        centerPanel = createCenterPanel();
+        southPanel = createSouthPanel();
         
         mainPanel.setLayout(new BorderLayout(20, 20));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -146,8 +147,10 @@ public class StoreSystem extends JPanel{
                       //final Product currentProduct=curent;
                       curent.showProduct(currentUser);
                       //currentProduct.showProduct(currentUser);
-                      if (current.type==2)   
+                      if (current.type==2)  { 
                           frame.dispose();
+                           mainPanel.resize(10, 10);
+                      }
                       
                     }
                 }); 
@@ -249,10 +252,12 @@ public class StoreSystem extends JPanel{
                 Product newProduct=new Product();
                 ((Seller)current).inventory.addProduct(newProduct);
                 newProduct.showProduct(current);
-
+                
                 frame.dispose();
                 
-                //frame.repaint();
+                mainPanel.resize(10, 10);
+                
+                
                 
             }
         });

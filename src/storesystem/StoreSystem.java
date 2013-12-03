@@ -231,7 +231,8 @@ public class StoreSystem extends JPanel{
                                 "     Invoice price: "+pp.getInvoicePrice()+
                                 "     Sell price:  "+pp.getSellPrice()+"\n";
                         }
-                    toSet+="\nREVENUES: "+revenues+"     COSTS: "+costs+"     PROFIT: "+(revenues-costs);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    toSet+="\nREVENUES: "+revenues+"     COSTS: "+costs+"     PROFIT: "+df.format(revenues-costs);
                     textArea.setText(toSet);
                     textArea.setEditable(false);
                     southPanel.repaint();

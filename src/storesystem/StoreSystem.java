@@ -196,15 +196,22 @@ public class StoreSystem extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 String toSet="";
+                double total=0;
                     int i=-1;
                     for (Product pp:pProduct){
+                        
                         i++;
-                        if (checkBoxes.get(i).isSelected())
+                        if (checkBoxes.get(i).isSelected()){
                             toSet+="Name: "+pp.getProductName()+
-                                    "\tPrice: "+pp.getInvoicePrice()+
+                                    "\tPrice: "+pp.getSellPrice()+
                                     "\tDescription: "+pp.getDescription()+"\n";
+                            total+=pp.getSellPrice();
                         }
+                        }
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    toSet+="\nTOTAL:  $"+df.format(total);
                     textArea.setText(toSet);
+                    textArea.setEditable(false);
                     southPanel.repaint();
             }
         }); 
@@ -226,6 +233,7 @@ public class StoreSystem extends JPanel{
                         }
                     toSet+="\nREVENUES: "+revenues+"     COSTS: "+costs+"     PROFIT: "+(revenues-costs);
                     textArea.setText(toSet);
+                    textArea.setEditable(false);
                     southPanel.repaint();
             }
         }); 

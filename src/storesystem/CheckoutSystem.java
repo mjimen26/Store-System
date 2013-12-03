@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,6 +23,7 @@ import javax.swing.event.ListSelectionListener;
 public class CheckoutSystem extends JPanel{
     JTextField prodTxt = new JTextField();    
     JTextField qtyTxt = new JTextField();
+    JTextField ttlTxt = new JTextField();
     final JList list = new JList();    
     
     //The Main Panel of Checkout
@@ -44,29 +46,9 @@ public class CheckoutSystem extends JPanel{
         DefaultListModel model = new DefaultListModel();
        
         for (Product currentProduct:toBuy){
-            model.addElement(currentProduct.getProductName()+"          $"+currentProduct.getInvoicePrice()+"       Available: "+currentProduct.getQuantity());
+            model.addElement(currentProduct.getProductName()+"          $"+currentProduct.getSellPrice()+"       Available: "+currentProduct.getQuantity());
             quantities.add(1);
-        }
-
-//        qtyTxt.addActionListener(new java.awt.event.ActionListener() {
-//            @Override
-//    public void actionPerformed(java.awt.event.ActionEvent e) {
-//                
-//                int index=list.getSelectedIndex();                             
-//                System.out.println("The index is::::::::::::"+index);
-//                if (Integer.parseInt(qtyTxt.getText())<=0){
-//                                   JOptionPane.showMessageDialog(null,
-//                                           "Error: Please enter number bigger than 0", "Error Massage",
-//                                           JOptionPane.ERROR_MESSAGE);
-//                               }  
-//                if (Integer.parseInt(qtyTxt.getText())>quantities.get(index)){
-//                                   JOptionPane.showMessageDialog(null,
-//                                           "Error: Not enough available product, please buy up to the offered quantity!", "Error Massage",
-//                                           JOptionPane.ERROR_MESSAGE);
-//                               }
-//     }
-//});
-       
+        }       
         
         list.setModel(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -93,9 +75,21 @@ public class CheckoutSystem extends JPanel{
                     }
                 });
 
-       // final JTextArea text = new JTextArea(10,50);
-        //text.setText(toBuyList.get(1).getPicture());
         textPanel.add(new JScrollPane(list));
+        textPanel.add(ttlTxt);
+        
+        int i=-1;
+        double total=0;
+        for (Product currentProduct:toBuyList){
+                        i++;
+                        total+=currentProduct.getSellPrice()*quantities.get(i);
+                    }
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        //toSet+="\nTOTAL:  $"+df.format(total);
+                       ttlTxt.setText("TOTAL:  $"+df.format(total));
+                    
+        
+        
         
         JPanel buttonPanel = new JPanel(new GridLayout(1,3));
         JButton cancelButton = new JButton("Cancel");
@@ -134,7 +128,6 @@ public class CheckoutSystem extends JPanel{
     public void actionPerformed(java.awt.event.ActionEvent e) {
                 
                 int index=list.getSelectedIndex();                             
-                //System.out.println("The index is::::::::::::"+index+" available: "+toBuyList.get(index).getQuantity());
                 if (Integer.parseInt(qtyTxt.getText())<0){
                                    JOptionPane.showMessageDialog(null,
                                            "Error: Please enter a non-negative number\n", "Error Massage",
@@ -148,8 +141,17 @@ public class CheckoutSystem extends JPanel{
                                }
                 else{
                     quantities.set(index, Integer.parseInt(qtyTxt.getText()));
-                    
-                }
+                    int i=-1;
+                    double total=0;
+                    for (Product currentProduct:toBuyList){
+                        i++;
+                        total+=currentProduct.getSellPrice()*quantities.get(i);
+                    }
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        //toSet+="\nTOTAL:  $"+df.format(total);
+                       ttlTxt.setText("TOTAL:  $"+df.format(total));
+                    }
+
      }
 });
         
@@ -200,9 +202,6 @@ public class CheckoutSystem extends JPanel{
             for (Product currentProduct: toBuyList){
                 i++; 
                 currentProduct.sell(quantities.get(i));
-                //System.out.println("sold "+quantities.get(i)+" "+currentProduct.getDescription());
-                //System.out.println("new available quantiity: "+currentProduct.getQuantity());
-                //quantities.get(i);
             }
             seller1.seri();
             seller2.seri();

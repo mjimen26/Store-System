@@ -93,6 +93,7 @@ public class Product implements Serializable{
                     
         final Frame frame = new JFrame(this.getProductName());
         frame.setLayout(new BorderLayout());
+        frame.setResizable(false);
         //pp.getPicture());
         Image image = null;
         try {

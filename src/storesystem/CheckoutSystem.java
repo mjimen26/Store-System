@@ -33,6 +33,7 @@ public class CheckoutSystem extends JPanel{
     static final ArrayList <Integer> quantities=new ArrayList <Integer>();
     
     public CheckoutSystem(ArrayList <Product> toBuy,Seller seller_1,Seller seller_2,String who){
+        frame.setResizable(false);
         toBuyList=toBuy;
         seller1=seller_1;
         seller2=seller_2;

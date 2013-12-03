@@ -24,8 +24,6 @@ public class StoreSystem extends JPanel{
     final ArrayList <Product> pProduct = new ArrayList<Product>();
     final ArrayList <JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
     //New Shopping Cart and the Interface
-    final ShoppingCart cart = new ShoppingCart();
-    final ShoppingCartFormatter formatter = new SimpleFormatter();
     static JFrame frame = new JFrame("Welcome back " ); 
     JPanel centerPanel; 
     JPanel southPanel;
@@ -293,6 +291,7 @@ public class StoreSystem extends JPanel{
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setResizable(false);
         
     }
     public User customer=new Customer("Marvin","icecream");

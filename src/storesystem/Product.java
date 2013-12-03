@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package storesystem;
 
 import java.awt.BorderLayout;
@@ -34,9 +31,14 @@ import static storesystem.CheckoutSystem.frame;
 public class Product implements Serializable{
     
     /**
-     * Constructs a product
+     * Constructs a Product
+     * @param productID the product ID
+     * @param productName the product name
+     * @param invoicePrice the invoice price
+     * @param sellPrice the selling price
+     * @param quantity the quantity
+     * @param picture the image
      * @param description the description
-     * @param price the price
      */
     public Product(String productID, String productName,
             double invoicePrice, double sellPrice,
@@ -51,7 +53,11 @@ public class Product implements Serializable{
         this.picture=picture;
         this.sold=0;
     }
-        public Product(){
+    
+    /**
+     * Constructs a Product
+     */
+    public Product(){
         this.description = "";
         this.productID="";
         this.productName="";
@@ -62,96 +68,121 @@ public class Product implements Serializable{
         this.sold=0;
     }
     
+    //Returns sellPrice
     public double getSellPrice(){
         return sellPrice;
     }
-     public int getQuantity(){
+    //Returns quantity 
+    public int getQuantity(){
         return quantity;
     }
-      public String getProductID(){
+    //Returns productID 
+    public String getProductID(){
         return productID;
-    } public String getProductName(){
+    } 
+    //Returns product name
+    public String getProductName(){
         return productName;
-    } public double getInvoicePrice(){
-        return invoicePrice;}
-     public String getDescription(){
+    } 
+    //Returns invoicePrice
+    public double getInvoicePrice(){
+        return invoicePrice;
+    }
+    //Returns desciption
+    public String getDescription(){
         return description;
-    } public String getPicture(){
+    } 
+    //Returns image
+    public String getPicture(){
         return picture;
-    } public int getSold(){
+    } 
+    //Returns amount sold
+    public int getSold(){
         return sold;
     }
+    
+    /**
+     * Keeps track of the amount sold
+     * @param x current amount sold
+     */
     public void sell(int x){
         sold+=x;
         quantity-=x;
     }
     
+    /**
+     * Displays a Product Window
+     * @param user the user type
+     */
     public void showProduct(User user){
         
-    final User userr=user;
-    if (user.type==2){   //THIS IS A SELLER WATCHIN THIS ITEM
-                    
-        final Frame frame = new JFrame(this.getProductName());
-        frame.setLayout(new BorderLayout());
-        frame.setResizable(false);
-        //pp.getPicture());
-        Image image = null;
-        try {
-            URL url = new URL(this.getPicture());
-            image = ImageIO.read(url);
-        } 
-        catch (IOException ee) {
-            ee.printStackTrace();
-        }
+        final User userr=user;
+        
+        //If a seller clicks the product name, 
+        //Display all fields and make all editable
+        if (user.type==2){      
+            final Frame frame = new JFrame(this.getProductName());
+            frame.setLayout(new BorderLayout());
+            frame.setResizable(false);
+            Image image = null;
+            try {
+                URL url = new URL(this.getPicture());
+                image = ImageIO.read(url);
+            } 
+            catch (IOException ee) {
+                ee.printStackTrace();
+            }
             
-        JLabel label = new JLabel(new ImageIcon(image));
-        frame.add(label, BorderLayout.NORTH);
+            JLabel label = new JLabel(new ImageIcon(image));
+            frame.add(label, BorderLayout.NORTH);
                     
-        JLabel fieldDesc1 = new JLabel("Product ID");
-        JLabel fieldDesc2=new JLabel("Product Name");
-        JLabel fieldDesc3=new JLabel("Invoice Price");
-        JLabel fieldDesc4=new JLabel("Sell Price");
-        JLabel fieldDesc5=new JLabel("Quantity");
-        JLabel fieldDesc6=new JLabel("Description");
-        JLabel fieldDesc7=new JLabel("Picture URL");
+            JLabel fieldDesc1 = new JLabel("Product ID");
+            JLabel fieldDesc2=new JLabel("Product Name");
+            JLabel fieldDesc3=new JLabel("Invoice Price");
+            JLabel fieldDesc4=new JLabel("Sell Price");
+            JLabel fieldDesc5=new JLabel("Quantity");
+            JLabel fieldDesc6=new JLabel("Description");
+            JLabel fieldDesc7=new JLabel("Picture URL");
                     
-        final TextField textField5=new TextField(this.getProductID());
-        final TextField textField2=new TextField(this.getProductName());
-        final TextField textField3=new TextField(Double.toString(this.getInvoicePrice()));
-        final TextField textField6=new TextField(Double.toString(this.getSellPrice()));
-        final TextField textField7=new TextField(Integer.toString(this.getQuantity()));
-        final TextField textField1=new TextField(this.getDescription());
-        final TextField textField4=new TextField(this.getPicture());
-        final Product currentProduct=this;
-        JButton saveButton = new JButton("Save Changes");
-                     
-        saveButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){            
-                currentProduct.productID=textField5.getText();
-                currentProduct.productName=textField2.getText();
-                currentProduct.invoicePrice=Double.parseDouble(textField3.getText());
-                currentProduct.sellPrice=Double.parseDouble(textField6.getText());
-                currentProduct.quantity=Integer.parseInt(textField7.getText());
-                currentProduct.description=textField1.getText();
-                currentProduct.picture=textField4.getText();
-                ((Seller)userr).seri();                            
-                JOptionPane.showMessageDialog(frame, "Product has been saved.\nThank you");
-                //frame.dispose();
-                            
-                StoreSystem regFace = new StoreSystem(userr.name);
-                regFace.setVisible(true);
-                regFace.main();               
-                frame.dispose();
-            }   
-        }); 
+            final TextField textField5=new TextField(this.getProductID());
+            final TextField textField2=new TextField(this.getProductName());
+            final TextField textField3=new TextField(Double.toString(this.getInvoicePrice()));
+            final TextField textField6=new TextField(Double.toString(this.getSellPrice()));
+            final TextField textField7=new TextField(Integer.toString(this.getQuantity()));
+            final TextField textField1=new TextField(this.getDescription());
+            final TextField textField4=new TextField(this.getPicture());
+            final Product currentProduct=this;
+            JButton saveButton = new JButton("Save Changes");
+              
+            //Seller updates a Product
+            //Seller clicks on Save Changes button
+            saveButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){            
+                    currentProduct.productID=textField5.getText();
+                    currentProduct.productName=textField2.getText();
+                    currentProduct.invoicePrice=Double.parseDouble(textField3.getText());
+                    currentProduct.sellPrice=Double.parseDouble(textField6.getText());
+                    currentProduct.quantity=Integer.parseInt(textField7.getText());
+                    currentProduct.description=textField1.getText();
+                    currentProduct.picture=textField4.getText();
+                    ((Seller)userr).seri();                            
+                    JOptionPane.showMessageDialog(frame, 
+                            "Product has been saved.\nThank you");
+                    
+                    //Refresh StoreSystem Window
+                    StoreSystem regFace = new StoreSystem(userr.name);
+                    regFace.setVisible(true);
+                    regFace.main();               
+                    frame.dispose();
+                }   
+            }); 
         
-        textField1.setEditable(true);
-        textField2.setEditable(true);
-        textField3.setEditable(true);
-        textField4.setEditable(true);
+            textField1.setEditable(true);
+            textField2.setEditable(true);
+            textField3.setEditable(true);
+            textField4.setEditable(true);
         
-        JPanel listPane = new JPanel(new GridLayout(0,2));
-                     
+        JPanel listPane = new JPanel(new GridLayout(0,2));             
         listPane.add(fieldDesc1);
         listPane.add(textField5);
                      
@@ -179,9 +210,11 @@ public class Product implements Serializable{
         frame.setSize(400, 700);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        }
+        }//end of if
         
-    else if (user.type==1){   //THIS IS A BUYER WATCHING THIS ITEM
+    //If the Customer clicks the prodcut name,
+    //Display some fields, not editable
+    else if (user.type==1){
         
         Frame frame = new JFrame(this.getProductName());
         frame.setLayout(new BorderLayout());
@@ -218,15 +251,15 @@ public class Product implements Serializable{
         frame.setSize(400, 550);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
-    }
+        }//end of endif
+    }//end of showProduct
     
     private String productID;
     private String productName;
     private double invoicePrice;
     private double sellPrice;
     private int quantity;
-    private String description; //the description of a product 
+    private String description;
     private String picture;
     
     private int sold;   

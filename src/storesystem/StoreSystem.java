@@ -15,66 +15,66 @@ import javax.imageio.ImageIO;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/*
- * StoreSystem is in charge of hangling the main methods
- * in the entire application
+/**
+ * StoreSystem is in charge of handling the main methods of the program.
+ * It's frame is divided into two Panels, the top being the Inventory 
+ *      and the bottom being the Shopping Cart.
  */
 public class StoreSystem extends JPanel{
     
     final ArrayList <Product> pProduct = new ArrayList<Product>();
     final ArrayList <JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
-    //New Shopping Cart and the Interface
-    static JFrame frame = new JFrame("Welcome back " ); 
-    JPanel centerPanel; 
-    JPanel southPanel;
-    //The Main Panel
-    private JPanel mainPanel = new JPanel();    
-    public StoreSystem(){}
     
-    //Constructor for StoreSystem
+    static JFrame frame = new JFrame("Welcome back " ); 
+    JPanel centerPanel; //Inventory 
+    JPanel southPanel;  //Shopping Cart
+    private JPanel mainPanel = new JPanel();
+    
+    /**
+     * Constructs a new StoreSystem.
+     * @param who the type of user using the program
+     */
     public StoreSystem(String who){
-      
-          which=who;
+
+        which=who;
         if (customer.name.equals(which)) current=customer;
         if (seller1.name.equals(which)) current=seller1;
         if (seller2.name.equals(which)) current=seller2;
-      
+        
+        //Create the two Panels
         centerPanel = createCenterPanel();
         southPanel = createSouthPanel();
         
+        //Add the two Panels to the mainPanel
         mainPanel.setLayout(new BorderLayout(20, 20));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         mainPanel.add(centerPanel, BorderLayout.NORTH);
-        mainPanel.add(southPanel, BorderLayout.SOUTH);
-        
+        mainPanel.add(southPanel, BorderLayout.SOUTH);        
     }
     
     /*
-     * The Center Panel displays the inventory
+     * Creates the Center Panel displays the Inventory.
+     * It is also responsible for running the listeners of both customer and
+     * the seller.
+     * @return the centerPanel
      */
     private JPanel createCenterPanel(){
-        //North Panel
         JPanel centerPanel = new JPanel(new GridLayout(0,4));
         DecimalFormat df = new DecimalFormat("#.##");
                     
         ArrayList pName = new ArrayList();
         ArrayList pPrice = new ArrayList();
         ArrayList pQuantity = new ArrayList();
-        //final ArrayList <Product> pProduct = new ArrayList<Product>();
         
         //Distinguishes the type of user that is logged in.
-        //If customer, show all products
-        //Else if seller, show private inventory only
+        //If customer (type=1), show all products
+        //Else if seller (type=2), show private inventory only
         if (current.type==1){
-            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
             System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
                 if (p.getQuantity()>0){
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
-                   // pName.add(p.getProductName());
-                   // pPrice.add(p.getSellPrice());
-                   // pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
@@ -82,79 +82,62 @@ public class StoreSystem extends JPanel{
                 if (p.getQuantity()>0){
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
-                    //pName.add(p.getProductName());
-                    //pPrice.add(p.getSellPrice());
-                    //pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
         }
         else if (current.name.equals("one")){
-            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
             System.out.println("this is logged in: "+current.name);
             for (Product p:seller1.inventory.inventory){
                 {
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
-                    //pName.add(p.getProductName());
-                    //pPrice.add(p.getSellPrice());
-                    //pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
         }
         else if (current.name.equals("two")){
-            //Iterator <Product> itr1=Iterators.forArray(seller1.inventory.inventory);//seller1.inventory.inventory.iterator();
             System.out.println("this is logged in: "+current.name);
             for (Product p:seller2.inventory.inventory){
                 {
                     pProduct.add(p);
                     checkBoxes.add(new JCheckBox());
-                    //pName.add(p.getProductName());
-                    //pPrice.add(p.getSellPrice());
-                    //pQuantity.add(p.getQuantity());
                     System.out.println(p.getProductName());
                 }
             }
         }
 
-        //JComponents necessary to arrange the Inventory neatly.
+        //JComponents necessary to display in the Inventory.
         JPanel checkPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel namePanel = new JPanel(new GridLayout(0, 1, 5, 5));
         JPanel spricePanel = new JPanel(new GridLayout(0, 1, 5, 5));
-        JPanel qtyPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-      
-        //display the products
-        //for(int x=0; x<pProduct.size(); x++){
-        //final Product p;
+        JPanel qtyPanel = new JPanel(new GridLayout(0, 1, 5, 5));      
+        
+        //Display the products
         int i=-1;
         final User currentUser=current;
-          for (Product pp:pProduct){  
-              i++;
-              final Product curent=pp;
-              //SAVE WHICH KIND OF USER AS FINAL
+        for (Product pp:pProduct){
+            i++;
+            final Product curent=pp;
             JPanel check = new JPanel(new BorderLayout());
-            
             JPanel name = new JPanel(new BorderLayout());
-             //final Product p=pp;
-            
-              name.addMouseListener(new MouseAdapter()  {
-                  
-                  @Override
-                public void mouseClicked(MouseEvent e) {
-                      //final Product currentProduct=curent;
-                      curent.showProduct(currentUser);
-                      //currentProduct.showProduct(currentUser);
-                      if (current.type==2)  { 
-                          frame.dispose();
-                           mainPanel.resize(10, 10);
-                      }
-                      
-                    }
-                }); 
             JPanel sell = new JPanel(new BorderLayout());
             JPanel qty = new JPanel(new BorderLayout());
             
+            //When a Product name is clicked, display the Product Window
+            //showing all the details of that Product
+            name.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    curent.showProduct(currentUser);
+                    if (current.type==2)  { 
+                        frame.dispose();
+                        mainPanel.resize(10, 10);
+                    }
+                }
+            });
+            
+            //Add the fields on their corresponding Panel
             check.add(checkBoxes.get(i));
             name.add(new JLabel(pp.getProductName()), BorderLayout.NORTH);
             sell.add(new JLabel("$" + pp.getSellPrice()), BorderLayout.NORTH);
@@ -166,107 +149,116 @@ public class StoreSystem extends JPanel{
             qtyPanel.add(qty);
         }
         
-        //add the panels to centerPanel
         if ((current.type==1))
             centerPanel.add(checkPanel);
-        centerPanel.add(namePanel);
-        centerPanel.add(spricePanel);
-        centerPanel.add(qtyPanel);
-        
+            centerPanel.add(namePanel);
+            centerPanel.add(spricePanel);
+            centerPanel.add(qtyPanel);
         
         return centerPanel;
     }//end of createCenterPanel
     
     /*
      * The South Panel displays the Shopping Cart and is updated 
-     * every time the Update Cart button is clicked.
+     *      every time the Update Cart button is clicked.
+     * The arrangement and layout of components change depending on the 
+     *      type of user logged in.
+     * @return the southPanel
      */
     private JPanel createSouthPanel(){
-        //South Panel
-        final JPanel southPanel = new JPanel();
-        southPanel.setLayout(new BorderLayout());
+        final JPanel southPanel = new JPanel(new BorderLayout());
         final JTextArea textArea = new JTextArea(10,50);
+        
+        //Customer
         JButton addButton = new JButton("Update Cart");
-        JButton viewTransactions = new JButton("View Transactions");
         JButton checkoutButton = new JButton("Checkout");
+        //Seller
+        JButton viewTransactions = new JButton("View Transactions");
         JButton addNewProduct = new JButton("Add New Product");
         
-        //Update Listener
+        //Adding a Product to the Shopping Cart 
+        //Customer clicks Update Cart button
         addButton.addMouseListener(new MouseAdapter()  {
             @Override
             public void mouseClicked(MouseEvent e) {
                 String toSet="";
                 double total=0;
-                    int i=-1;
-                    for (Product pp:pProduct){
-                        
-                        i++;
-                        if (checkBoxes.get(i).isSelected()){
-                            toSet+="Name: "+pp.getProductName()+
-                                    "\tPrice: "+pp.getSellPrice()+
-                                    "\tDescription: "+pp.getDescription()+"\n";
-                            total+=pp.getSellPrice();
-                        }
-                        }
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    toSet+="\nTOTAL:  $"+df.format(total);
-                    textArea.setText(toSet);
-                    textArea.setEditable(false);
-                    southPanel.repaint();
+                int i=-1;
+                for (Product pp:pProduct){     
+                    i++;
+                    if (checkBoxes.get(i).isSelected()){
+                        toSet+="Name: "+pp.getProductName()+
+                            "\tPrice: "+pp.getSellPrice()+
+                            "\tDescription: "+pp.getDescription()+"\n";
+                        total+=pp.getSellPrice();
+                    }
+                }
+                
+                DecimalFormat df = new DecimalFormat("#.##");
+                toSet+="\nTOTAL:  $"+df.format(total);
+                textArea.setText(toSet);
+                textArea.setEditable(false);
+                southPanel.repaint();
             }
         }); 
-        //View Transactions Listener
-        viewTransactions.addMouseListener(new MouseAdapter()  {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                double revenues=0,costs=0;
-                String toSet="";
-                    
-                    for (Product pp:pProduct){
-                        revenues+=pp.getSellPrice()*pp.getSold();
-                        costs+=pp.getInvoicePrice()*(pp.getSold()+pp.getQuantity());
-                        toSet+="Item: "+pp.getProductName()+
-                                "     Quantity sold: "+pp.getSold()+
-                                "     Quantity availble "+pp.getQuantity()+
-                                "     Invoice price: "+pp.getInvoicePrice()+
-                                "     Sell price:  "+pp.getSellPrice()+"\n";
-                        }
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    toSet+="\nREVENUES: "+revenues+"     COSTS: "+costs+"     PROFIT: "+df.format(revenues-costs);
-                    textArea.setText(toSet);
-                    textArea.setEditable(false);
-                    southPanel.repaint();
-            }
-        }); 
-        //Checkout Listener
+        
+        //Proceed to Checkout
+        //Customer clicks Checkout button
         checkoutButton.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 ArrayList <Product> toBuy = new ArrayList<Product>();
                 int i=-1;
                 for (Product pp:pProduct){
-                        i++;
-                        if (checkBoxes.get(i).isSelected())
-                            toBuy.add(pp);
-                  }
-                CheckoutSystem check = new CheckoutSystem(toBuy,seller1,seller2,which);
+                    i++;
+                    if (checkBoxes.get(i).isSelected())
+                        toBuy.add(pp);
+                }
+                
+                CheckoutSystem check = 
+                        new CheckoutSystem(toBuy,seller1,seller2,which);
                 check.setVisible(true);
                 check.main(toBuy,seller1,seller2,which);
                 frame.dispose();
             }
         });
         
-          addNewProduct.addMouseListener(new MouseAdapter(){
+        //Review transaction details
+        //Seller clicks View Transactions button
+        viewTransactions.addMouseListener(new MouseAdapter()  {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                double revenues=0,costs=0;
+                String toSet="";
+                
+                for (Product pp:pProduct){
+                    revenues+=pp.getSellPrice()*pp.getSold();
+                    costs+=pp.getInvoicePrice()*(pp.getSold()+pp.getQuantity());
+                    toSet+="Item: "+pp.getProductName()+
+                        "     Quantity sold: "+pp.getSold()+
+                        "     Quantity availble "+pp.getQuantity()+
+                        "     Invoice price: "+pp.getInvoicePrice()+
+                        "     Sell price:  "+pp.getSellPrice()+"\n";
+                }
+                
+                DecimalFormat df = new DecimalFormat("#.##");
+                toSet+="\nREVENUES: " + revenues +
+                        "     COSTS: " + costs +
+                        "     PROFIT: " + df.format(revenues-costs);
+                textArea.setText(toSet);
+                textArea.setEditable(false);
+                southPanel.repaint();
+            }
+        }); 
+        
+        //Seller adds new product
+        //Seller clicks Add New Product button
+        addNewProduct.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
                 Product newProduct=new Product();
                 ((Seller)current).inventory.addProduct(newProduct);
                 newProduct.showProduct(current);
-                
                 frame.dispose();
-                
                 mainPanel.resize(10, 10);
-                
-                
-                
             }
         });
     
@@ -274,24 +266,30 @@ public class StoreSystem extends JPanel{
         JPanel ctrlPanel = new JPanel(new GridLayout(0,2));
         if (current.type==1) ctrlPanel.add(addButton);
         else ctrlPanel.add(viewTransactions);
-        if (current.type==1) ctrlPanel.add(checkoutButton);     //show check out only for buyer
-        else ctrlPanel.add(addNewProduct);     //show add new only for seller
+        //show Checkout only for customer
+        if (current.type==1) ctrlPanel.add(checkoutButton);
+        //show Add New Product only for seller
+        else ctrlPanel.add(addNewProduct);     
         
-        //the entire South Panel
+        //Add all Panels to the Shopping Cart Panel
         southPanel.add(new JScrollPane(textArea), BorderLayout.NORTH);
         southPanel.add(ctrlPanel, BorderLayout.SOUTH);
             
         return southPanel;
     }//end of createSouthPanel
     
-    /*
+    /**
      * Returns the Main Panel containing the Inventory and Shopping Cart Panels
+     * @return mainPanel
      */
     public JPanel getMainPanel()
     {
         return mainPanel;
     }
  
+    /**
+     * Creates then shows the UI
+     */
     private static void createAndShowUI()
     {
         //final JFrame frame = new JFrame("Welcome back "+which );
@@ -304,17 +302,16 @@ public class StoreSystem extends JPanel{
         frame.setResizable(false);
         
     }
+    
     public User customer=new Customer("Marvin","icecream");
     public Seller seller1=new Seller("one","password");
     public Seller seller2=new Seller("two","password");
     static public String which;
     User current;
     
-    public  void main() {
-        
+    public  void main() {    
         //listing a product to seller manually - disable when not needed please
         if (seller1.inventory.inventory.isEmpty()){
-            //seller1.inventory.addProduct(new Product("productID1","productName1",1.1, 1.1,5, "http://vk.com/images/gifts/256/454.jpg","description of product 1"));
             seller1.inventory.addProduct(new Product("11","Bicycle",1990.50,    2149.99,    1, "http://static.bootic.com/_pictures/1394318/400x400/trek-top-fuel-9-9-ssl.jpg", "Trek Top Fuel 9.9 SSL 2011"));
             seller1.inventory.addProduct(new Product("12","Snorkel" ,12.00,     15.55,      10, "http://feeds2.yourstorewizards.com/1749/images/400x400/us-divers-cozumel-diving-mask-seabreeze-snorkel-and-proflex-fins-snorkeling-set.jpg","A snorkel set"));
             seller1.inventory.addProduct(new Product("13","Monster" ,6.99,      13.13,      12, "http://www.meijer.com/assets/product_images/styles/xlarge/1000896_801471BS_A_400.jpg","Kids Monster INC. Costume"));
@@ -328,15 +325,12 @@ public class StoreSystem extends JPanel{
             seller2.inventory.addProduct(new Product("24","Dusters" ,7.0,       15.50,      20, "http://img2.wfrcdn.com/lf/49/hash/3907/3507081/1/Ultrajet®+Dusters+-+8+oz.+ultrajet+all-way+duster+aerosol.jpg","Chemtronics Ultrajet® Dusters-8oz."));
             seller2.inventory.addProduct(new Product("25","Needles" ,1.15,      2.15,       35, "http://img2.timeinc.net/health/images/gallery/condition-centers/needle-syringe-400x400.jpg","Needle and syringe: 10cc capacity"));
             seller2.inventory.addProduct(new Product("26","Bubbles" ,0.99,      1.79,       50, "http://ecx.images-amazon.com/images/I/51TKrGtToiL.jpg","Miracle Bubbles Party Bubbles, 6-PackRead"));
-            
 
-           // do serialization only when : add\edit product AND when sold product
+            //do serialization when (1)add\edit product, (2) Product is sold
             seller1.seri();
             seller2.seri();
         }
-        ////////////////////////????????????????//////////////////////
-        //StoreSystem storeSys = new StoreSystem(which);
-
+       
         //Call to Create StoreSystem UI
         java.awt.EventQueue.invokeLater(new Runnable()
         {
@@ -348,23 +342,3 @@ public class StoreSystem extends JPanel{
     }//end of main
    
 }//end of StoreSystem class
-
-        /*
-         * //change listeners
-        ChangeListener listener = new 
-                ChangeListener(){
-                    public void stateChanged(ChangeEvent event){
-                        textArea.setText(cart.format(formatter));
-                    }
-                };
-        cart.addChangeListener(listener);
-        
-        //button listener
-        addButton.addActionListener(new
-                ActionListener(){
-                   public void actionPerformed(ActionEvent event){
-                       LineItem item = (LineItem) combo.getSelectedItem();
-                       cart.addItem(item);
-                   } 
-                });
-         */

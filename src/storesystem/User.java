@@ -1,15 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package storesystem;
 
-/*
- *
- * @author Administrator
+/**
+ * The User class is the main class which holds the
+ *      name, password, and type of a user.
  */
 public class User {
-    
     
     public String name;
     public String password;
